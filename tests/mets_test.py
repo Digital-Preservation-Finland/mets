@@ -18,7 +18,7 @@ def mets():
 
     """
     return read_xml(LocalTarget(
-        'tests/workflow/data/csc_test_valid_sip/mets.xml')).getroot()
+        'tests/data/sips/csc_test_valid_sip/mets.xml')).getroot()
 
 
 def test_find_created_date():
