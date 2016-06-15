@@ -1,5 +1,7 @@
 """Read and write METS documents"""
 
+import dateutil.parser
+
 METS_NS = 'http://www.loc.gov/METS/'
 XSI_NS = 'http://www.w3.org/2001/XMLSchema-instance'
 
@@ -33,6 +35,11 @@ def get_created_date(mets):
     header = mets.find(mets_ns('metsHdr'))
     create_date = header.get("CREATEDATE")
     last_modified_date = header.get("LASTMODDATE")
+
+    if create_date is not None:
+        create_date = dateutil.parser.parse(create_date)
+    if last_modified_date is not None:
+        last_modified_date = dateutil.parser.parse(last_modified_date)
 
     return (create_date, last_modified_date)
 

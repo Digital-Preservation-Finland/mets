@@ -1,5 +1,7 @@
 """Test the `preservation.mets` module"""
 
+import datetime
+
 import pytest
 
 
@@ -30,7 +32,7 @@ def test_find_created_date():
 
     (created_date, last_modified_date) = m.get_created_date(mets())
 
-    assert created_date == '2013-11-19T16:40:17'
+    assert created_date == datetime.datetime(2013, 11, 19, 16, 40, 17)
     assert last_modified_date is None
 
 
