@@ -2,70 +2,32 @@
 
 import datetime
 import xml.etree.ElementTree as ET
-import siptools.xml.xmlutil
-import siptools.xml.namespaces
+import common_xml_utils.utils
 import uuid
 import re
 
 METS_NS = 'http://www.loc.gov/METS/'
 XSI_NS = 'http://www.w3.org/2001/XMLSchema-instance'
-FI_NS = 'http://www.kdk.fi/standards/mets/kdk-extensions'
 XLINK = 'http://www.w3.org/1999/xlink'
 
-DIV_TYPES = ['Documentation files',
-    'Configuration files',
-    'Other files',
-    'Method files',
-    'Notebook',
-    'Publication files',
-    'Access and use rights files',
-    'Software files',
-    'Machine-readable metadata']
+NAMESPACES = {'mets': METS_NS,
+              'xsi': XSI_NS,
+              'xlink': XLINK}
 
-def serialize(root_element):
-    """Serialize ElementTree structure with PREMIS namespace mapping.
-
-    This modifies the default "ns0:tag" style prefixes to "premis:tag"
-    prefixes.
-
-    :element: Starting element to serialize
-    :returns: Serialized XML as string
-
-    """
-
-    siptools.xml.xmlutil.indent(root_element)
-
-    return ET.tostring(root_element, encoding='utf8')
-
-
-def mets_mets(profile=siptools.xml.namespaces.METS_PROFILE['kdk'],
-        objid=str(uuid.uuid4()), label=None,
-        catalog=siptools.xml.namespaces.METS_CATALOG,
-        specification=siptools.xml.namespaces.METS_SPECIFICATION, contentid=None):
+def mets_mets(profile, objid=str(uuid.uuid4()), label=None
+              namespaces=NAMESPACES):
     """Create METS ElementTree"""
 
-    def register_namespace(prefix, uri):
-        """foo"""
-        ns_map = getattr(ET, '_namespace_map')
-        ns_map[uri] = prefix
-
-    for prefix, uri in siptools.xml.namespaces.NAMESPACES.iteritems():
-        register_namespace(prefix, uri)
+    common_xml_utils.utils.register_namespaces(namespaces)
 
     mets = _element('mets')
-    mets.set('xmlns:' + 'fi', FI_NS)
     mets.set('xmlns:' + 'xlink', XLINK)
     mets.set('PROFILE', profile)
     mets.set('OBJID', objid)
-    mets.set('fi:CATALOG', catalog)
-    mets.set('fi:SPECIFICATION', specification)
     if label:
         mets.set('LABEL', label)
-    if contentid:
-        mets.set('fi:CONTENTID', contentid)
 
     return mets
-
 
 
 def order(element):
@@ -337,8 +299,7 @@ def div(type=None, order=None, contentids=None, label=None, orderlabel=None,
     return _div
 
 
-def structmap(type=None, label=None, pid=None,
-              pidtype=None):
+def structmap(type=None, label=None):
     """Return the structmap element"""
 
     _structmap = _element('structMap')
@@ -347,10 +308,6 @@ def structmap(type=None, label=None, pid=None,
         _structmap.set('TYPE', type)
     if label:
         _structmap.set('LABEL', label)
-    if pid:
-        _structmap.set('PID', pid)
-    if pidtype:
-        _structmap.set('PIDTYPE', pidtype)
 
     return _structmap
 

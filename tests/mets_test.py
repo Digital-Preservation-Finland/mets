@@ -1,30 +1,27 @@
-"""Test the `preservation.mets` module"""
+"""Test the `mets_tools.mets` module"""
 
 import datetime
-
+import xml.etree.ElementTree as ET
 import pytest
 
-
-from preservation.workflow.utils import read_xml
-
-from luigi import LocalTarget
-
-import preservation.mets as m
+import dpres_xml_handler.mets as m
 
 
-@pytest.fixture
 def mets():
-    """Return a test mets.xml file
+    """Return an incomplete test METS
 
-    :returns: METS as ElementTree
+    :returns: root Element of ElementTree
 
     """
-    return read_xml(LocalTarget(
-        'tests/data/sips/csc_test_valid_sip/mets.xml')).getroot()
+    xml = '''<mets:mets OBJID="kdk-csc-sip001"
+             xmlns:mets="http://www.loc.gov/METS/">
+             <mets:metsHdr CREATEDATE="2013-11-19T16:40:17">
+             </mets:metsHdr></mets:mets>'''
+    return ET.ElementTree(ET.fromstring(xml)).getroot()
 
 
 def test_find_created_date():
-    """Test the `preservation.mets.find_created_date` function
+    """Test the `dpres_xml_handler.mets.find_created_date` function
 
     :returns: None
 
@@ -37,7 +34,7 @@ def test_find_created_date():
 
 
 def test_get_objid():
-    """Test the `preservation.mets.get_objid` function.
+    """Test the `dpres_xml_date.mets.get_objid` function.
 
     :returns: None
 
@@ -45,3 +42,4 @@ def test_get_objid():
 
     objid = m.get_objid(mets())
     assert objid == 'kdk-csc-sip001'
+
