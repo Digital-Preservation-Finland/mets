@@ -1,10 +1,8 @@
 """Read and write METS documents"""
 
 import datetime
-import xml.etree.ElementTree as ET
-import common_xml_utils.utils
-import uuid
-import re
+import dateutil
+from mets_tools.mets import element, mets_ns
 
 
 def get_created_date(mets):
@@ -33,10 +31,10 @@ def get_created_date(mets):
 def mets_agent(organisation_name, agent_role='CREATOR',
         agent_type='ORGANIZATION'):
     """Returns METS agent element"""
-    metsagent = _element('agent')
+    metsagent = element('agent')
     metsagent.set('ROLE', agent_role)
     metsagent.set('TYPE', agent_type)
-    _orgname = _element('name')
+    _orgname = element('name')
     _orgname.text = organisation_name
     metsagent.append(_orgname)
 
@@ -47,7 +45,7 @@ def metshdr(organisation_name, create_date=datetime.datetime.utcnow().isoformat(
         last_mod_date=None, record_status=None):
     """Return the metsHdr element"""
 
-    _metshdr = _element('metsHdr')
+    _metshdr = element('metsHdr')
     _metshdr.set('CREATEDATE', create_date)
     if last_mod_date:
         _metshdr.set('LASTMODDATE', last_mod_date)

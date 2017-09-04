@@ -1,18 +1,18 @@
 """Read and write METS documents"""
 
-import datetime
-import xml.etree.ElementTree as ET
-import common_xml_utils.utils
-import uuid
-import re
+from mets_tools.mets import element
 
 
-def mdwrap(mdtype='PREMIS:OBJECT', mdtypeversion="2.3"):
-    element = _element('mdWrap')
-    element.set('MDTYPE', mdtype)
-    element.set('MDTYPEVERSION', mdtypeversion)
-    return element
+def mdwrap(mdtype='PREMIS:OBJECT', othermdtype="",
+           mdtypeversion="2.3"):
+    elem = element('mdWrap')
+    elem.set('MDTYPE', mdtype)
+    elem.set('MDTYPEVERSION', mdtypeversion)
+    if mdtype == 'OTHER':
+        elem.set('OTHERMDTYPE', othermdtype)
+    return elem
+
 
 def xmldata():
-    return _element('xmlData')
+    return element('xmlData')
 

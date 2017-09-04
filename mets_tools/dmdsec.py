@@ -2,30 +2,32 @@
 
 import datetime
 import uuid
-from mets.mets import mets_ns
+from mets_tools.mets import element
+from mets_tools.mdwrap import mdwrap, xmldata
+from common_xml_utils.utils import get_namespace
 
-def dmdSec(child_elements=None, element_id=str(uuid.uuid4()),
+
+def dmdsec(mdtype_dict,
+        child_elements=None, element_id=str(uuid.uuid4()),
         created_date=datetime.datetime.utcnow().isoformat()):
     """Return the dmdSec element"""
 
-    dmdSec = _element('dmdSec')
-    dmdSec.set('ID', element_id)
-    dmdSec.set('CREATED', created_date)
-    mdWrap = _element('mdWrap')
-    xmlData = _element('xmlData')
+    dmdsec_elem = element('dmdSec')
+    dmdsec_elem.set('ID', element_id)
+    dmdsec_elem.set('CREATED', created_date)
+    xmldata_elem = xmldata()
     if child_elements:
-        for element in child_elements:
-            xmlData.append(element)
-            ns = namespace(element)[1:-1]
-            if ns in mets_ns.keys():
-                mdWrap.set("MDTYPE", mets_ns[ns]['mdtype'])
-                if mets_ns[ns]['mdtype'] == 'OTHER':
-                    mdWrap.set('OTHERMDTYPE', mets_ns[ns]['othermdtype'])
-                mdWrap.set('MDTYPEVERSION', mets_ns[ns]['version'])
+        for elem in child_elements:
+            xmldata_elem.append(elem)
+            ns = get_namespace(elem)[1:-1]
+            if ns in mdtype_dict.keys():
+                mdwrap_elem = mdwrap(mdtype_dict[ns]['mdtype'],
+                                     mdtype_dict[ns]['othermdtype'],
+                                     mdtype_dict[ns]['version'])
             else:
                 raise TypeError("Invalid namespace: %s" % ns)
-    mdWrap.append(xmlData)
-    dmdSec.append(mdWrap)
+    mdwrap_elem.append(xmldata_elem)
+    dmdsec_elem.append(mdwrap_elem)
 
-    return dmdSec
+    return dmdsec_elem
 

@@ -1,16 +1,11 @@
 """Read and write METS documents"""
 
-import datetime
-import xml.etree.ElementTree as ET
-import common_xml_utils.utils
-import uuid
-import re
-
+from mets_tools.mets import element
 
 def mptr(loctype=None, xlink_href=None, xlink_type=None):
     """Return the fptr element"""
 
-    _mptr = _element('mptr')
+    _mptr = element('mptr')
     _mptr.set('LOCTYPE', loctype)
     _mptr.set('xlink:href', xlink_href)
     _mptr.set('xlink:type', xlink_type)
@@ -18,13 +13,13 @@ def mptr(loctype=None, xlink_href=None, xlink_type=None):
     return _mptr
 
 
-def div(type=None, order=None, contentids=None, label=None, orderlabel=None,
+def div(type_attr=None, order=None, contentids=None, label=None, orderlabel=None,
         dmdid=None, admid=None,
         div_elements=None, fptr_elements=None, mptr_elements=None):
     """Return the div element"""
 
-    _div = _element('div')
-    _div.set('TYPE', type)
+    _div = element('div')
+    _div.set('TYPE', type_attr)
     if order:
         _div.set('ORDER', order)
     if contentids:
@@ -39,25 +34,25 @@ def div(type=None, order=None, contentids=None, label=None, orderlabel=None,
         _div.set('ADMID', ' '.join(admid))
 
     if div_elements:
-        for element in div_elements:
-            _div.append(element)
+        for elem in div_elements:
+            _div.append(elem)
     if fptr_elements:
-        for element in fptr_elements:
-            _div.append(element)
+        for elem in fptr_elements:
+            _div.append(elem)
     if mptr_elements:
-        for element in mptr_elements:
-            _div.append(element)
+        for elem in mptr_elements:
+            _div.append(elem)
 
     return _div
 
 
-def structmap(type=None, label=None):
+def structmap(type_attr=None, label=None):
     """Return the structmap element"""
 
-    _structmap = _element('structMap')
+    _structmap = element('structMap')
     #_structMap.append(div_element)
-    if type:
-        _structmap.set('TYPE', type)
+    if type_attr:
+        _structmap.set('TYPE', type_attr)
     if label:
         _structmap.set('LABEL', label)
 

@@ -1,10 +1,8 @@
 """Read and write METS documents"""
 
-import datetime
 import xml.etree.ElementTree as ET
-import common_xml_utils.utils
 import uuid
-import re
+import common_xml_utils.utils
 
 METS_NS = 'http://www.loc.gov/METS/'
 XSI_NS = 'http://www.w3.org/2001/XMLSchema-instance'
@@ -14,13 +12,14 @@ NAMESPACES = {'mets': METS_NS,
               'xsi': XSI_NS,
               'xlink': XLINK}
 
-def mets_mets(profile, objid=str(uuid.uuid4()), label=None
+
+def mets_mets(profile, objid=str(uuid.uuid4()), label=None,
               namespaces=NAMESPACES):
     """Create METS ElementTree"""
 
     common_xml_utils.utils.register_namespaces(namespaces)
 
-    mets = _element('mets')
+    mets = element('mets')
     mets.set('xmlns:' + 'xlink', XLINK)
     mets.set('PROFILE', profile)
     mets.set('OBJID', objid)
@@ -30,15 +29,20 @@ def mets_mets(profile, objid=str(uuid.uuid4()), label=None
     return mets
 
 
-def order(element):
+def order(elem):
     """Return order number for given element in METS schema. This can be
     use for example with sort(). """
     return  ['{%s}dmdSec' % METS_NS,
-            '{%s}amdSec' % METS_NS,
-            '{%s}techMD' % METS_NS,
-            '{%s}digiprovMD' % METS_NS,
-            '{%s}fileSec' % METS_NS,
-            '{%s}structMap' % METS_NS].index(element.tag)
+             '{%s}amdSec' % METS_NS,
+             '{%s}techMD' % METS_NS,
+             '{%s}digiprovMD' % METS_NS,
+             '{%s}fileSec' % METS_NS,
+             '{%s}structMap' % METS_NS].index(elem.tag)
+
+
+def children_order(elem):
+    return ['{%s}techMD' % METS_NS,
+            '{%s}digiprovMD' % METS_NS,].index(elem.getchildren()[0].tag)
 
 
 def merge_elements(tag, elements):
@@ -46,8 +50,8 @@ def merge_elements(tag, elements):
     elements_to_merge = filter(lambda x: x.tag == tag, elements)
 
     elements_to_merge.sort(key=children_order)
-    for element in elements_to_merge[1:]:
-        elements_to_merge[0].extend(element.getchildren())
+    for elem in elements_to_merge[1:]:
+        elements_to_merge[0].extend(elem.getchildren())
 
     elements = list(set(elements) - set(elements_to_merge))
     return elements + [elements_to_merge[0]]
@@ -108,10 +112,4 @@ def subelement(parent, tag, prefix=""):
 
     """
     return ET.SubElement(parent, mets_ns(tag, prefix))
-
-
-def namespace(element):
-    """return xml element's namespace"""
-    m = re.match('\{.*\}', element.tag)
-    return m.group(0) if m else ''
 
