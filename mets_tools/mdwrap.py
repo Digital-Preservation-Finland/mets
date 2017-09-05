@@ -1,11 +1,11 @@
 """Read and write METS documents"""
 
-from mets_tools.mets import element
+from mets_tools.mets import _element
 
 
 def mdwrap(mdtype='PREMIS:OBJECT', othermdtype="",
            mdtypeversion="2.3"):
-    elem = element('mdWrap')
+    elem = _element('mdWrap')
     elem.set('MDTYPE', mdtype)
     elem.set('MDTYPEVERSION', mdtypeversion)
     if mdtype == 'OTHER':
@@ -14,5 +14,5 @@ def mdwrap(mdtype='PREMIS:OBJECT', othermdtype="",
 
 
 def xmldata():
-    return element('xmlData')
+    return _element('xmlData')
 

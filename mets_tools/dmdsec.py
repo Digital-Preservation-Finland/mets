@@ -2,7 +2,7 @@
 
 import datetime
 import uuid
-from mets_tools.mets import element
+from mets_tools.mets import _element
 from mets_tools.mdwrap import mdwrap, xmldata
 from common_xml_utils.utils import get_namespace
 
@@ -12,7 +12,7 @@ def dmdsec(mdtype_dict,
         created_date=datetime.datetime.utcnow().isoformat()):
     """Return the dmdSec element"""
 
-    dmdsec_elem = element('dmdSec')
+    dmdsec_elem = _element('dmdSec')
     dmdsec_elem.set('ID', element_id)
     dmdsec_elem.set('CREATED', created_date)
     xmldata_elem = xmldata()

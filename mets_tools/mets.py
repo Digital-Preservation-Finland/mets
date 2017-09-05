@@ -19,7 +19,7 @@ def mets_mets(profile, objid=str(uuid.uuid4()), label=None,
 
     common_xml_utils.utils.register_namespaces(namespaces)
 
-    mets = element('mets')
+    mets = _element('mets')
     mets.set('xmlns:' + 'xlink', XLINK)
     mets.set('PROFILE', profile)
     mets.set('OBJID', objid)
@@ -83,8 +83,8 @@ def get_objid(mets):
     return mets.get("OBJID")
 
 
-def element(tag, prefix=""):
-    """Return _ElementInterface with PREMIS namespace.
+def _element(tag, prefix=""):
+    """Return _ElementInterface with METS namespace.
 
     Prefix parameter is useful for adding prefixed to lower case tags. It just
     uppercases first letter of tag and appends it to prefix::
@@ -101,7 +101,7 @@ def element(tag, prefix=""):
     return ET.Element(mets_ns(tag, prefix))
 
 
-def subelement(parent, tag, prefix=""):
+def _subelement(parent, tag, prefix=""):
     """Return subelement for the given parent element. Created element is
     appelded to parent element.
 

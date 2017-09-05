@@ -1,12 +1,12 @@
 """Read and write METS documents"""
 
-from mets_tools.mets import element
+from mets_tools.mets import _element
 
 
 def fptr(fileid=None):
     """Return the fptr element"""
 
-    _fptr = element('fptr')
+    _fptr = _element('fptr')
     _fptr.set('FILEID', fileid)
 
     return _fptr
@@ -15,7 +15,7 @@ def fptr(fileid=None):
 def filegrp(use=None, file_elements=None):
     """Return the fileGrp element"""
 
-    _filegrp = element('fileGrp')
+    _filegrp = _element('fileGrp')
     if use:
         _filegrp.set('USE', use)
     if file_elements:
@@ -28,7 +28,7 @@ def filegrp(use=None, file_elements=None):
 def filesec(filegroup_elements=None):
     """Return the fileSec element"""
 
-    _filesec = element('fileSec')
+    _filesec = _element('fileSec')
     if filegroup_elements:
         for elem in filegroup_elements:
             _filesec.append(elem)
@@ -40,14 +40,14 @@ def file_elem(ID=None, admid_elements=None, loctype=None, xlink_href=None, xlink
          groupid=None):
     """Return the file element"""
 
-    _file = element('file')
+    _file = _element('file')
     _file.set('ID', ID)
     admids = ' '.join(admid_elements)
     _file.set('ADMID', admids)
     if groupid:
         _file.set('GROUPID', groupid)
 
-    _flocat = element('FLocat')
+    _flocat = _element('FLocat')
     _flocat.set('LOCTYPE', loctype)
     _flocat.set('xlink:href', xlink_href)
     _flocat.set('xlink:type', xlink_type)

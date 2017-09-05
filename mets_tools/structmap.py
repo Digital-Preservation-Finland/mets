@@ -1,11 +1,11 @@
 """Read and write METS documents"""
 
-from mets_tools.mets import element
+from mets_tools.mets import _element
 
 def mptr(loctype=None, xlink_href=None, xlink_type=None):
     """Return the fptr element"""
 
-    _mptr = element('mptr')
+    _mptr = _element('mptr')
     _mptr.set('LOCTYPE', loctype)
     _mptr.set('xlink:href', xlink_href)
     _mptr.set('xlink:type', xlink_type)
@@ -18,7 +18,7 @@ def div(type_attr=None, order=None, contentids=None, label=None, orderlabel=None
         div_elements=None, fptr_elements=None, mptr_elements=None):
     """Return the div element"""
 
-    _div = element('div')
+    _div = _element('div')
     _div.set('TYPE', type_attr)
     if order:
         _div.set('ORDER', order)
@@ -49,7 +49,7 @@ def div(type_attr=None, order=None, contentids=None, label=None, orderlabel=None
 def structmap(type_attr=None, label=None):
     """Return the structmap element"""
 
-    _structmap = element('structMap')
+    _structmap = _element('structMap')
     #_structMap.append(div_element)
     if type_attr:
         _structmap.set('TYPE', type_attr)
