@@ -3,15 +3,6 @@
 from mets_tools.mets import _element
 
 
-def fptr(fileid=None):
-    """Return the fptr element"""
-
-    _fptr = _element('fptr')
-    _fptr.set('FILEID', fileid)
-
-    return _fptr
-
-
 def filegrp(use=None, file_elements=None):
     """Return the fileGrp element"""
 

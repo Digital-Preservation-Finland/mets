@@ -2,6 +2,16 @@
 
 from mets_tools.mets import _element
 
+
+def fptr(fileid=None):
+    """Return the fptr element"""
+
+    _fptr = _element('fptr')
+    _fptr.set('FILEID', fileid)
+
+    return _fptr
+
+
 def mptr(loctype=None, xlink_href=None, xlink_type=None):
     """Return the fptr element"""
 
