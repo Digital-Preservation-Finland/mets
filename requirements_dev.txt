@@ -3,3 +3,4 @@ coverage
 pytest-cov
 lxml
 dateutils
+git+https://source.csc.fi/scm/git/pas/common-xml-utils@develop#egg=common_xml_utils

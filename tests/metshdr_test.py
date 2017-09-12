@@ -15,8 +15,8 @@ def test_get_created_date():
     mets = ET.fromstring(xml)
     (created, modified) = m.get_created_date(mets)
 
-    assert created == '2017-12-12T12:12:12'
-    assert modified == '2017-12-12T12:12:13'
+    assert created.strftime('%Y-%m-%dT%H:%M:%S') == '2017-12-12T12:12:12'
+    assert modified.strftime('%Y-%m-%dT%H:%M:%S') == '2017-12-12T12:12:13'
 
 
 def test_agent():

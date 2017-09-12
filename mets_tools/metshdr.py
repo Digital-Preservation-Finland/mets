@@ -1,7 +1,7 @@
 """Read and write METS documents"""
 
 import datetime
-import dateutil
+import dateutil.parser
 from mets_tools.mets import _element, mets_ns
 
 

@@ -14,7 +14,7 @@ test:
 	py.test -svvvv --junitprefix=mets-tools --junitxml=junit.xml tests
 
 coverage:
-	py.test tests --cov=mets-tools --cov-report=html
+	py.test tests --cov=mets_tools --cov-report=html
 	coverage report -m
 	coverage html
 	coverage xml

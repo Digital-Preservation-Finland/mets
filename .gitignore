@@ -24,3 +24,5 @@ Thumbs.db
 rpmbuild
 .venv/
 junit*.xml
+htmlcov/
+coverage.xml
