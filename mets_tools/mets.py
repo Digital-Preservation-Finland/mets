@@ -23,9 +23,6 @@ def mets_mets(profile, objid=str(uuid.uuid4()), label=None,
         xsi_ns('schemaLocation'),
         'http://www.loc.gov/METS/ '
         'http://www.loc.gov/standards/mets/mets.xsd')
-    # mets.set('xmlns:' + 'mets', METS_NS)
-    # mets.set('xmlns:' + 'xsi', XSI_NS)
-    # mets.set('xmlns:' + 'xlink', XLINK)
     mets.set('PROFILE', profile)
     mets.set('OBJID', objid)
     if label:
