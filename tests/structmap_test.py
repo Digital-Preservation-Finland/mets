@@ -2,7 +2,7 @@
 import xml.etree.ElementTree as ET
 import pytest
 
-import mets_tools.structmap as m
+import mets.structmap as m
 
 def test_fptr():
     """test fptr"""

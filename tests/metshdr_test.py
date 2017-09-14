@@ -2,7 +2,7 @@
 import xml.etree.ElementTree as ET
 import pytest
 
-import mets_tools.metshdr as m
+import mets.metshdr as m
 
 
 def test_get_created_date():

@@ -2,7 +2,7 @@
 import xml.etree.ElementTree as ET
 import pytest
 
-import mets_tools.filesec as m
+import mets.filesec as m
 
 def test_filegrp():
     """test filegrp"""

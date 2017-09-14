@@ -1,9 +1,9 @@
-"""Test the `mets_tools.mets` module"""
+"""Test the `mets.mets` module"""
 
 import xml.etree.ElementTree as ET
 import pytest
 
-import mets_tools.mets as m
+import mets.mets as m
 
 
 def test_get_objid():

@@ -2,7 +2,7 @@
 
 import datetime
 import dateutil.parser
-from mets_tools.mets import _element, mets_ns
+from mets.mets import _element, mets_ns
 
 
 def get_created_date(mets):

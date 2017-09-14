@@ -2,7 +2,7 @@
 import xml.etree.ElementTree as ET
 import pytest
 
-import mets_tools.dmdsec as m
+import mets.dmdsec as m
 
 def test_dmdsec():
     """test dmdsec"""

@@ -2,8 +2,8 @@
 
 import datetime
 import uuid
-from mets_tools.mets import _element
-from mets_tools.mdwrap import mdwrap, xmldata
+from mets.mets import _element
+from mets.mdwrap import mdwrap, xmldata
 from common_xml_utils.utils import get_namespace
 
 

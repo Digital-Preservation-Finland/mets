@@ -1,5 +1,5 @@
 """
-Install mets-tools
+Install mets
 """
 
 import os
@@ -7,9 +7,9 @@ from setuptools import setup, find_packages
 
 
 def main():
-    """Install mets-tools"""
+    """Install mets"""
     setup(
-        name='mets_tools',
+        name='mets',
         packages=find_packages(exclude=['tests', 'tests.*']),
         version='1.0')
 
