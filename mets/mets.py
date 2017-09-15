@@ -2,7 +2,7 @@
 
 import xml.etree.ElementTree as ET
 import uuid
-from common_xml_utils.utils import XSI_NS, xsi_ns, register_namespaces
+from xml_helpers.utils import XSI_NS, xsi_ns, register_namespaces
 
 METS_NS = 'http://www.loc.gov/METS/'
 XLINK = 'http://www.w3.org/1999/xlink'

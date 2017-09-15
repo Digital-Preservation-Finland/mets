@@ -4,7 +4,6 @@ import datetime
 import uuid
 from mets.mets import _element
 from mets.mdwrap import mdwrap, xmldata
-from common_xml_utils.utils import get_namespace
 
 
 def dmdsec(element_id, child_elements=None,
