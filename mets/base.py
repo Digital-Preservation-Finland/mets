@@ -12,23 +12,27 @@ NAMESPACES = {'mets': METS_NS,
               'xlink': XLINK}
 
 
-def mets(profile, objid=str(uuid.uuid4()), label=None,
-              namespaces=NAMESPACES):
+def mets(profile='local', objid=str(uuid.uuid4()), label=None,
+         namespaces=NAMESPACES, child_elements=None):
     """Create METS ElementTree"""
 
     register_namespaces(namespaces)
 
-    mets = _element('mets')
-    mets.set(
+    _mets = _element('mets')
+    _mets.set(
         xsi_ns('schemaLocation'),
         'http://www.loc.gov/METS/ '
         'http://www.loc.gov/standards/mets/mets.xsd')
-    mets.set('PROFILE', profile)
-    mets.set('OBJID', objid)
+    _mets.set('PROFILE', profile)
+    _mets.set('OBJID', objid)
     if label:
-        mets.set('LABEL', label)
+        _mets.set('LABEL', label)
 
-    return mets
+    if child_elements:
+        for elem in child_elements:
+            _mets.append(elem)
+
+    return _mets
 
 
 def order(elem):
@@ -74,7 +78,7 @@ def mets_ns(tag, prefix=""):
     return '{%s}%s' % (METS_NS, tag)
 
 
-def get_objid(mets):
+def get_objid(mets_el):
     """Return mets:OBJID from given `mets` document
 
     :mets: ElementTree document
@@ -82,7 +86,7 @@ def get_objid(mets):
 
     """
 
-    return mets.get("OBJID")
+    return mets_el.get("OBJID")
 
 
 def _element(tag, prefix=""):

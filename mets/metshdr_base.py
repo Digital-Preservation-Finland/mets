@@ -29,7 +29,7 @@ def get_created_date(mets):
 
 
 def agent(organisation_name, agent_role='CREATOR',
-        agent_type='ORGANIZATION'):
+          agent_type='ORGANIZATION'):
     """Returns METS agent element"""
     metsagent = _element('agent')
     metsagent.set('ROLE', agent_role)
@@ -42,7 +42,7 @@ def agent(organisation_name, agent_role='CREATOR',
 
 
 def metshdr(organisation_name, create_date=datetime.datetime.utcnow().isoformat(),
-        last_mod_date=None, record_status=None):
+            last_mod_date=None, record_status=None):
     """Return the metsHdr element"""
 
     _metshdr = _element('metsHdr')
