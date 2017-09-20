@@ -9,7 +9,7 @@ def filegrp(use=None, child_elements=None):
     _filegrp = _element('fileGrp')
     if use:
         _filegrp.set('USE', use)
-    if file_elements:
+    if child_elements:
         for elem in child_elements:
             _filegrp.append(elem)
 
@@ -20,7 +20,7 @@ def filesec(child_elements=None):
     """Return the fileSec element"""
 
     _filesec = _element('fileSec')
-    if filegroup_elements:
+    if child_elements:
         for elem in child_elements:
             _filesec.append(elem)
 
