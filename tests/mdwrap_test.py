@@ -2,7 +2,7 @@
 import xml.etree.ElementTree as ET
 import pytest
 
-import mets.mdwrap as m
+import mets.mdwrap_base as m
 
 def test_mdwrap():
     """test mdwrap"""

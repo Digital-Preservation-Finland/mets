@@ -1,7 +1,7 @@
 """Read and write METS documents"""
 
 import datetime
-from mets.mets import _element
+from mets.base import _element
 
 
 def techmd(element_id, created_date=datetime.datetime.utcnow().isoformat(),

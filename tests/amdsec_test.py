@@ -2,7 +2,7 @@
 import xml.etree.ElementTree as ET
 import pytest
 
-import mets.amdsec as m
+import mets.amdsec_base as m
 
 def test_techmd():
     """test techmd"""

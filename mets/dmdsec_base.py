@@ -2,8 +2,7 @@
 
 import datetime
 import uuid
-from mets.mets import _element
-from mets.mdwrap import mdwrap, xmldata
+from mets.base import _element
 
 
 def dmdsec(element_id, child_elements=None,

@@ -2,7 +2,7 @@
 
 import datetime
 import dateutil.parser
-from mets.mets import _element, mets_ns
+from mets.base import _element, mets_ns
 
 
 def get_created_date(mets):
@@ -28,7 +28,7 @@ def get_created_date(mets):
     return (create_date, last_modified_date)
 
 
-def mets_agent(organisation_name, agent_role='CREATOR',
+def agent(organisation_name, agent_role='CREATOR',
         agent_type='ORGANIZATION'):
     """Returns METS agent element"""
     metsagent = _element('agent')
@@ -51,7 +51,7 @@ def metshdr(organisation_name, create_date=datetime.datetime.utcnow().isoformat(
         _metshdr.set('LASTMODDATE', last_mod_date)
     _metshdr.set('RECORDSTATUS', record_status)
 
-    _metsagent = mets_agent(organisation_name)
+    _metsagent = agent(organisation_name)
 
     _metshdr.append(_metsagent)
 

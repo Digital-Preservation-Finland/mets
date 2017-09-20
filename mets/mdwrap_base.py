@@ -1,6 +1,6 @@
 """Read and write METS documents"""
 
-from mets.mets import _element
+from mets.base import _element
 
 
 def mdwrap(mdtype='PREMIS:OBJECT', othermdtype="",

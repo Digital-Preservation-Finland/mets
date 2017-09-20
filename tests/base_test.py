@@ -3,7 +3,7 @@
 import xml.etree.ElementTree as ET
 import pytest
 
-import mets.mets as m
+import mets.base as m
 
 
 def test_get_objid():
@@ -18,9 +18,9 @@ def test_get_objid():
     objid = m.get_objid(ET.fromstring(xml))
     assert objid == 'kdk-csc-sip001'
 
-def test_mets_mets():
+def test_mets():
     """Test METS root generation"""
-    mets_tree = ET.tostring(m.mets_mets('xxx', objid='yyy', label='zzz'))
+    mets_tree = ET.tostring(m.mets('xxx', objid='yyy', label='zzz'))
     mets_xml = """<mets:mets
                   xsi:schemaLocation="http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd"
                   xmlns:mets = "http://www.loc.gov/METS/"

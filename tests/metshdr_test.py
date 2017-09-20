@@ -2,7 +2,7 @@
 import xml.etree.ElementTree as ET
 import pytest
 
-import mets.metshdr as m
+import mets.metshdr_base as m
 
 
 def test_get_created_date():
@@ -25,7 +25,7 @@ def test_agent():
     xml = '<mets:agent xmlns:mets="http://www.loc.gov/METS/" ' \
           'ROLE="CREATOR" TYPE="ORGANIZATION">' \
           '<mets:name>zzz</mets:name></mets:agent>'
-    hdr = m.mets_agent('zzz')
+    hdr = m.agent('zzz')
     assert ET.tostring(hdr) == xml
 
 

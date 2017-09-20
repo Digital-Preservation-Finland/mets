@@ -12,7 +12,7 @@ NAMESPACES = {'mets': METS_NS,
               'xlink': XLINK}
 
 
-def mets_mets(profile, objid=str(uuid.uuid4()), label=None,
+def mets(profile, objid=str(uuid.uuid4()), label=None,
               namespaces=NAMESPACES):
     """Create METS ElementTree"""
 

@@ -1,6 +1,6 @@
 """Read and write METS documents"""
 
-from mets.mets import _element
+from mets.base import _element
 
 
 def filegrp(use=None, file_elements=None):
