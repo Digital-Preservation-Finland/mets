@@ -27,7 +27,7 @@ def test_file_element():
     xml = '<mets:file xmlns:mets="http://www.loc.gov/METS/" ' \
           'ADMID="yyy" ID="xxx"><mets:FLocat LOCTYPE="URI" ' \
           'xlink:href="zzz" xlink:type="simple" /></mets:file>'
-    felem = m.file_elem(ID='xxx', admid_elements=['yyy'],
+    felem = m.file_elem(file_id='xxx', admid_elements=['yyy'],
                         loctype='URI', xlink_href='zzz',
                         xlink_type='simple')
     assert ET.tostring(felem) == xml

@@ -21,14 +21,13 @@ def test_get_objid():
 def test_mets():
     """Test METS root generation"""
     mets_tree = ET.tostring(m.mets('xxx', objid='yyy', label='zzz'))
-    mets_xml = """<mets:mets
-                  xsi:schemaLocation="http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd"
-                  xmlns:mets = "http://www.loc.gov/METS/"
-                  xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
-                  xmlns:xlink = "http://www.w3.org/1999/xlink"
-                  PROFILE="xxx" OBJID="yyy" LABEL="zzz"></mets:mets>"""
-    mets_tree_xml = ET.tostring(ET.fromstring(mets_xml))
-    assert mets_tree == mets_tree_xml
+    mets_xml = '<mets:mets ' \
+               'xmlns:mets="http://www.loc.gov/METS/" ' \
+               'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' \
+               'LABEL="zzz" OBJID="yyy" PROFILE="xxx" ' \
+               'xmlns:xlink="http://www.w3.org/1999/xlink" ' \
+               'xsi:schemaLocation="http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd" />'
+    assert mets_tree == mets_xml
 
 
 def test_order():
