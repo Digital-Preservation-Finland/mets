@@ -1,6 +1,6 @@
 """Read and write METS documents"""
 
-from mets.base import _element
+from mets.base import _element, XLINK
 
 
 def filegrp(use=None, child_elements=None):
@@ -42,6 +42,7 @@ def file_elem(file_id=None, admid_elements=None, loctype=None,
     _flocat.set('LOCTYPE', loctype)
     _flocat.set('xlink:href', xlink_href)
     _flocat.set('xlink:type', xlink_type)
+    _flocat.set('xmlns:xlink', XLINK)
     _file.append(_flocat)
 
     return _file

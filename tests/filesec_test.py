@@ -26,7 +26,8 @@ def test_file_element():
     ET.register_namespace('mets', 'http://www.loc.gov/METS/')
     xml = '<mets:file xmlns:mets="http://www.loc.gov/METS/" ' \
           'ADMID="yyy" ID="xxx"><mets:FLocat LOCTYPE="URI" ' \
-          'xlink:href="zzz" xlink:type="simple" /></mets:file>'
+          'xlink:href="zzz" xlink:type="simple" ' \
+          'xmlns:xlink="http://www.w3.org/1999/xlink" /></mets:file>'
     felem = m.file_elem(file_id='xxx', admid_elements=['yyy'],
                         loctype='URI', xlink_href='zzz',
                         xlink_type='simple')

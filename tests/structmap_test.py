@@ -16,7 +16,8 @@ def test_mptr():
     """test mptr"""
     ET.register_namespace('mets', 'http://www.loc.gov/METS/')
     xml = '<mets:mptr xmlns:mets="http://www.loc.gov/METS/" ' \
-          'LOCTYPE="xxx" xlink:href="yyy" xlink:type="zzz" />'
+          'LOCTYPE="xxx" xlink:href="yyy" xlink:type="zzz" ' \
+          'xmlns:xlink="http://www.w3.org/1999/xlink" />'
     mptr = m.mptr(loctype='xxx', xlink_href='yyy', xlink_type='zzz')
     assert ET.tostring(mptr) == xml
 
