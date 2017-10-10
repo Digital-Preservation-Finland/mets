@@ -1,5 +1,5 @@
 """Test metshdr.py"""
-import xml.etree.ElementTree as ET
+import lxml.etree as ET
 import pytest
 
 import mets.metshdr_base as m
@@ -7,10 +7,9 @@ import mets.metshdr_base as m
 
 def test_get_created_date():
     """test metshdr"""
-    ET.register_namespace('mets', 'http://www.loc.gov/METS/')
     xml = '<mets:mets xmlns:mets="http://www.loc.gov/METS/">' \
           '<mets:metsHdr CREATEDATE="2017-12-12T12:12:12" '\
-          'LASTMODDATE="2017-12-12T12:12:13" />' \
+          'LASTMODDATE="2017-12-12T12:12:13"/>' \
           '</mets:mets>'
     mets = ET.fromstring(xml)
     (created, modified) = m.get_created_date(mets)
@@ -21,7 +20,6 @@ def test_get_created_date():
 
 def test_agent():
     """test agent"""
-    ET.register_namespace('mets', 'http://www.loc.gov/METS/')
     xml = '<mets:agent xmlns:mets="http://www.loc.gov/METS/" ' \
           'ROLE="CREATOR" TYPE="ORGANIZATION">' \
           '<mets:name>zzz</mets:name></mets:agent>'
@@ -31,7 +29,6 @@ def test_agent():
 
 def test_metshdr():
     """test metshdr"""
-    ET.register_namespace('mets', 'http://www.loc.gov/METS/')
     xml = '<mets:metsHdr xmlns:mets="http://www.loc.gov/METS/" ' \
           'CREATEDATE="2017-12-12T12:12:12" ' \
           'RECORDSTATUS="submission">' \

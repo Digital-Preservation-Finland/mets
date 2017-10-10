@@ -1,22 +1,75 @@
 """Read and write METS documents"""
 
-import xml.etree.ElementTree as ET
+import lxml.etree as ET
 import uuid
-from xml_helpers.utils import XSI_NS, xsi_ns, register_namespaces
+from xml_helpers.utils import XSI_NS, xsi_ns
 
 METS_NS = 'http://www.loc.gov/METS/'
-XLINK = 'http://www.w3.org/1999/xlink'
+XLINK_NS = 'http://www.w3.org/1999/xlink'
 
 NAMESPACES = {'mets': METS_NS,
               'xsi': XSI_NS,
-              'xlink': XLINK}
+              'xlink': XLINK_NS}
+
+
+def iter_elements_with_id(root, identifiers, section=None):
+    """Iterate all metadata elements under given section with given list of
+    IDREFS. If no section is given, IDs are searched everywhere in the
+    METS document, which is extremely slow if file is large.
+
+    Identifier parameter can be list or string where values are separated
+    with whitespace.
+
+    :root: Root element
+    :identifiers: List of IDREFS (list or string)
+    :section: "amdSec", "dmdSec", "fileSec", or None
+    :returns: Iterable for all references metadata elements
+
+    """
+    if isinstance(identifiers, str):
+        identifiers = identifiers.split()
+    for identifier in identifiers:
+        yield element_with_id(root, identifier, section)
+
+
+def element_with_id(root, identifier, section=None):
+    """Return single element with given ID from given section. If no
+    section is given, ID is searched from everywhere in the METS, which
+    is extremely slow if file is large.
+
+    ID is single unqiue reference to one of the following elements::
+
+        <techMD>, <sourceMD>, <rightsMD>, <digiprovMD>
+
+    :root: Root element
+    :identifier: ID as string
+    :returns: References element
+
+    """
+    if section == "amdSec":
+        query = "/mets:mets/mets:amdSec/*[@ID='{}']".format(identifier)
+    elif section == "dmdSec":
+        query = "/mets:mets/mets:dmdSec[@ID='{}']".format(identifier)
+    elif section == "fileSec":
+        query = "/mets:mets/mets:fileSec/mets:fileGrp/"
+        "mets:file[@ID='{}']".format(identifier)
+    else:
+        query = "//*[@ID='%s']" % identifier
+    results = root.xpath(query, namespaces=NAMESPACES)
+    if len(results) == 1:
+        return results[0]
+    else:
+        return None
+
+
+def parse(path):
+    return ET.parse(path).getroot()
 
 
 def mets(profile='local', objid=str(uuid.uuid4()), label=None,
          namespaces=NAMESPACES, child_elements=None):
     """Create METS ElementTree"""
 
-    register_namespaces(namespaces)
 
     _mets = _element('mets')
     _mets.set(
@@ -66,7 +119,7 @@ def merge_elements(tag, elements):
 def mets_ns(tag, prefix=""):
     """Prefix ElementTree tags with METS namespace.
 
-    object -> {info:lc...premis}object
+    object -> {http://...}object
 
     :tag: Tag name as string
     :returns: Prefixed tag
@@ -77,6 +130,16 @@ def mets_ns(tag, prefix=""):
         return '{%s}%s%s' % (METS_NS, prefix, tag)
     return '{%s}%s' % (METS_NS, tag)
 
+def xlink_ns(tag):
+    """Prefix tags with XLINK namespace.
+
+    object -> {http://...}object
+
+    :tag: Tag name as string
+    :returns: Prefixed tag
+
+    """
+    return '{%s}%s' % (XLINK_NS, tag)
 
 def get_objid(mets_el):
     """Return mets:OBJID from given `mets` document
@@ -89,7 +152,7 @@ def get_objid(mets_el):
     return mets_el.get("OBJID")
 
 
-def _element(tag, prefix=""):
+def _element(tag, prefix="", ns={}):
     """Return _ElementInterface with METS namespace.
 
     Prefix parameter is useful for adding prefixed to lower case tags. It just
@@ -104,10 +167,11 @@ def _element(tag, prefix=""):
     :returns: ElementTree element object
 
     """
-    return ET.Element(mets_ns(tag, prefix))
+    ns['mets'] = METS_NS
+    return ET.Element(mets_ns(tag, prefix), nsmap=ns)
 
 
-def _subelement(parent, tag, prefix=""):
+def _subelement(parent, tag, prefix="", ns={}):
     """Return subelement for the given parent element. Created element is
     appelded to parent element.
 
@@ -117,5 +181,6 @@ def _subelement(parent, tag, prefix=""):
     :returns: Created subelement
 
     """
-    return ET.SubElement(parent, mets_ns(tag, prefix))
+    ns['mets'] = METS_NS
+    return ET.SubElement(parent, mets_ns(tag, prefix), nsmap=ns)
 

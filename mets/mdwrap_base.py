@@ -1,6 +1,21 @@
 """Read and write METS documents"""
 
-from mets.base import _element
+from mets.base import _element, METS_NS
+
+
+def parse_mdwrap(section):
+    return section.find('.//{%s}mdWrap' % METS_NS)
+
+
+def parse_xmldata(wrap):
+    return wrap.find('.//{%s}xmlData/*' % METS_NS)
+
+
+def parse_wrap_mdtype(wrap):
+    mdtype = wrap.attrib.get('MDTYPE', None)
+    other = wrap.attrib.get('OTHERMDTYPE', None)
+    version = wrap.attrib.get('MDTYPEVERSION', None)
+    return {'mdtype': mdtype, 'othermdtype': other, 'mdtypeversion': version}
 
 
 def mdwrap(mdtype='PREMIS:OBJECT', othermdtype="",

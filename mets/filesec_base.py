@@ -1,6 +1,22 @@
 """Read and write METS documents"""
 
-from mets.base import _element, XLINK
+from mets.base import _element, xlink_ns, XLINK_NS, NAMESPACES, METS_NS
+
+
+def parse_use(elem):
+    return elem.attrib.get('USE', '').strip()
+
+
+def parse_admid(elem):
+    return split(elem.attrib.get('ADMID', '').strip())
+
+
+def parse_href(elem):
+    return elem.attrib.get('{%s}%s' % XLINK_NS, elem, '').strip()
+
+
+def mets_files(mets_root):
+    return mets_root.findall('./{{0}}fileSec//{{0}}file'.format(METS_NS))
 
 
 def filegrp(use=None, child_elements=None):
@@ -28,7 +44,8 @@ def filesec(child_elements=None):
 
 
 def file_elem(file_id=None, admid_elements=None, loctype=None,
-              xlink_href=None, xlink_type=None, groupid=None):
+              xlink_href=None, xlink_type=None, groupid=None,
+              use=None):
     """Return the file element"""
 
     _file = _element('file')
@@ -37,12 +54,13 @@ def file_elem(file_id=None, admid_elements=None, loctype=None,
     _file.set('ADMID', admids)
     if groupid:
         _file.set('GROUPID', groupid)
+    if use:
+        _file.set('USE', use)
 
-    _flocat = _element('FLocat')
+    _flocat = _element('FLocat', ns={'xlink': XLINK_NS})
     _flocat.set('LOCTYPE', loctype)
-    _flocat.set('xlink:href', xlink_href)
-    _flocat.set('xlink:type', xlink_type)
-    _flocat.set('xmlns:xlink', XLINK)
+    _flocat.set(xlink_ns('href'), xlink_href)
+    _flocat.set(xlink_ns('type'), xlink_type)
     _file.append(_flocat)
 
     return _file

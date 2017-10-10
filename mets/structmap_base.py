@@ -1,6 +1,6 @@
 """Read and write METS documents"""
 
-from mets.base import _element, XLINK
+from mets.base import _element, XLINK_NS, xlink_ns
 
 
 def fptr(fileid=None):
@@ -15,11 +15,10 @@ def fptr(fileid=None):
 def mptr(loctype=None, xlink_href=None, xlink_type=None):
     """Return the fptr element"""
 
-    _mptr = _element('mptr')
+    _mptr = _element('mptr', ns={'xlink': XLINK_NS})
     _mptr.set('LOCTYPE', loctype)
-    _mptr.set('xlink:href', xlink_href)
-    _mptr.set('xlink:type', xlink_type)
-    _mptr.set('xmlns:xlink', XLINK)
+    _mptr.set(xlink_ns('href'), xlink_href)
+    _mptr.set(xlink_ns('type'), xlink_type)
 
     return _mptr
 
