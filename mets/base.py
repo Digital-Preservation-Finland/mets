@@ -63,7 +63,7 @@ def element_with_id(root, identifier, section=None):
 
 
 def parse(path):
-    return ET.parse(path).getroot()
+    return ET.parse(path)
 
 
 def mets(profile='local', objid=str(uuid.uuid4()), label=None,

@@ -1,5 +1,6 @@
 """Read and write METS documents"""
 
+
 from mets.base import _element, xlink_ns, XLINK_NS, NAMESPACES, METS_NS
 
 
@@ -8,16 +9,20 @@ def parse_use(elem):
 
 
 def parse_admid(elem):
-    return split(elem.attrib.get('ADMID', '').strip())
+    return elem.attrib.get('ADMID', '').strip().split()
 
 
 def parse_href(elem):
-    return elem.attrib.get('{%s}%s' % XLINK_NS, elem, '').strip()
+    return elem.attrib.get('{%s}href' % XLINK_NS).strip()
 
 
-def mets_files(mets_root):
-    return mets_root.findall('./{{0}}fileSec//{{0}}file'.format(METS_NS))
+def parse_flocats(mets_file):
+    results = mets_file.xpath('mets:FLocat', namespaces=NAMESPACES)
+    return results
 
+def parse_files(mets_root):
+    results = mets_root.xpath('//mets:file', namespaces=NAMESPACES)
+    return results
 
 def filegrp(use=None, child_elements=None):
     """Return the fileGrp element"""

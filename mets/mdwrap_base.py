@@ -4,11 +4,11 @@ from mets.base import _element, METS_NS
 
 
 def parse_mdwrap(section):
-    return section.find('.//{%s}mdWrap' % METS_NS)
+    return section.find('{%s}mdWrap' % METS_NS)
 
 
 def parse_xmldata(wrap):
-    return wrap.find('.//{%s}xmlData/*' % METS_NS)
+    return wrap.find('{%s}xmlData/*' % METS_NS)
 
 
 def parse_wrap_mdtype(wrap):
