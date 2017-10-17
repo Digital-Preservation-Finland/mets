@@ -15,16 +15,22 @@ def parse_wrap_mdtype(wrap):
     mdtype = wrap.attrib.get('MDTYPE', None)
     other = wrap.attrib.get('OTHERMDTYPE', None)
     version = wrap.attrib.get('MDTYPEVERSION', None)
+    if mdtype is not None:
+        mdtype = mdtype.encode('utf-8')
+    if other is not None:
+        other = other.encode('utf-8')
+    if version is not None:
+        version = version.encode('utf-8')
     return {'mdtype': mdtype, 'othermdtype': other, 'mdtypeversion': version}
 
 
 def mdwrap(mdtype='PREMIS:OBJECT', othermdtype="",
            mdtypeversion="2.3", child_elements=None):
     mdwrap_e = _element('mdWrap')
-    mdwrap_e.set('MDTYPE', mdtype)
-    mdwrap_e.set('MDTYPEVERSION', mdtypeversion)
+    mdwrap_e.set('MDTYPE', mdtype.decode('utf-8'))
+    mdwrap_e.set('MDTYPEVERSION', mdtypeversion.decode('utf-8'))
     if mdtype == 'OTHER':
-        mdwrap_e.set('OTHERMDTYPE', othermdtype)
+        mdwrap_e.set('OTHERMDTYPE', othermdtype.decode('utf-8'))
     if child_elements:
         for elem in child_elements:
             mdwrap_e.append(elem)

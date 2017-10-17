@@ -29,10 +29,10 @@ def iter_elements_with_id(root, identifiers, section=None):
     if isinstance(identifiers, str):
         identifiers = identifiers.split()
     for identifier in identifiers:
-        yield element_with_id(root, identifier, section)
+        yield parse_element_with_id(root, identifier, section)
 
 
-def element_with_id(root, identifier, section=None):
+def parse_element_with_id(root, identifier, section=None):
     """Return single element with given ID from given section. If no
     section is given, ID is searched from everywhere in the METS, which
     is extremely slow if file is large.
@@ -62,24 +62,20 @@ def element_with_id(root, identifier, section=None):
         return None
 
 
-def parse(path):
-    return ET.parse(path)
-
-
 def mets(profile='local', objid=str(uuid.uuid4()), label=None,
          namespaces=NAMESPACES, child_elements=None):
     """Create METS ElementTree"""
 
 
-    _mets = _element('mets')
+    _mets = _element('mets', ns=namespaces)
     _mets.set(
         xsi_ns('schemaLocation'),
         'http://www.loc.gov/METS/ '
         'http://www.loc.gov/standards/mets/mets.xsd')
-    _mets.set('PROFILE', profile)
-    _mets.set('OBJID', objid)
+    _mets.set('PROFILE', profile.decode("utf-8"))
+    _mets.set('OBJID', objid.decode("utf-8"))
     if label:
-        _mets.set('LABEL', label)
+        _mets.set('LABEL', label.decode("utf-8"))
 
     if child_elements:
         for elem in child_elements:
@@ -141,7 +137,7 @@ def xlink_ns(tag):
     """
     return '{%s}%s' % (XLINK_NS, tag)
 
-def get_objid(mets_el):
+def parse_objid(mets_el):
     """Return mets:OBJID from given `mets` document
 
     :mets: ElementTree document
@@ -149,7 +145,7 @@ def get_objid(mets_el):
 
     """
 
-    return mets_el.get("OBJID")
+    return mets_el.get("OBJID").encode('utf-8')
 
 
 def _element(tag, prefix="", ns={}):

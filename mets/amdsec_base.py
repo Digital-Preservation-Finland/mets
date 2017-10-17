@@ -9,8 +9,8 @@ def techmd(element_id, created_date=datetime.datetime.utcnow().isoformat(),
     """Return the techMD element"""
 
     _techmd = _element('techMD')
-    _techmd.set('ID', element_id)
-    _techmd.set('CREATED', created_date)
+    _techmd.set('ID', element_id.decode('utf-8'))
+    _techmd.set('CREATED', created_date.decode('utf-8'))
 
     if child_elements:
         for elem in child_elements:
@@ -24,8 +24,8 @@ def digiprovmd(element_id, created_date=datetime.datetime.utcnow().isoformat(),
     """Return the digiprovMD element"""
 
     _digiprovmd = _element('digiprovMD')
-    _digiprovmd.set('ID', element_id)
-    _digiprovmd.set('CREATED', created_date)
+    _digiprovmd.set('ID', element_id.decode('utf-8'))
+    _digiprovmd.set('CREATED', created_date.decode('utf-8'))
 
     if child_elements:
         for elem in child_elements:

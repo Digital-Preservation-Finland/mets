@@ -12,9 +12,9 @@ TESTPATH = os.path.abspath(os.path.join(os.path.dirname(__file__)))
 def test_element_with_id():
     """Test the `element_with_admid` method."""
     root = ET.parse(os.path.join(TESTPATH, 'data', 'valid_mets.xml')).getroot()
-    techmd = m.element_with_id(root, 'tech003')
+    techmd = m.parse_element_with_id(root, 'tech003')
     assert techmd.attrib["ID"] == 'tech003'
-    dmdsec = m.element_with_id(root, 'dmd008')
+    dmdsec = m.parse_element_with_id(root, 'dmd008')
     assert dmdsec.attrib["ID"] == 'dmd008'
 
 
@@ -30,7 +30,7 @@ def test_iter_elements_with_id():
     assert len(results) == 4
 
 
-def test_get_objid():
+def test_parse_objid():
     """Test the `mets.get_objid` function.
 
     :returns: None
@@ -39,7 +39,7 @@ def test_get_objid():
     xml = """<mets:mets OBJID="kdk-csc-sip001"
              xmlns:mets="http://www.loc.gov/METS/">
              </mets:mets>"""
-    objid = m.get_objid(ET.fromstring(xml))
+    objid = m.parse_objid(ET.fromstring(xml))
     assert objid == 'kdk-csc-sip001'
 
 
@@ -47,7 +47,7 @@ def test_mets():
     """Test METS root generation"""
     mets_tree = ET.tostring(m.mets('xxx', objid='yyy', label='zzz'))
     mets_xml = '<mets:mets ' \
-               'xmlns:mets="http://www.loc.gov/METS/" ' \
+               'xmlns:mets="http://www.loc.gov/METS/" xmlns:xlink="http://www.w3.org/1999/xlink" ' \
                'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' \
                'xsi:schemaLocation="http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd" ' \
                'PROFILE="xxx" OBJID="yyy" LABEL="zzz"/>'

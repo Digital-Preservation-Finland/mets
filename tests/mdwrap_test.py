@@ -13,7 +13,7 @@ TESTPATH = os.path.abspath(os.path.join(os.path.dirname(__file__)))
 def test_parse_mdwrap():
     """Test the parse_mdwrap """
     root = ET.parse(os.path.join(TESTPATH, 'data', 'valid_mets.xml')).getroot()
-    wrap = mets.parse_mdwrap(mets.element_with_id(root, 'tech003'))
+    wrap = mets.parse_mdwrap(mets.parse_element_with_id(root, 'tech003'))
     mdtype = mets.parse_wrap_mdtype(wrap)
     xmldata = mets.parse_xmldata(wrap)
     assert mdtype['mdtype'] == 'PREMIS:OBJECT'
