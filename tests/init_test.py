@@ -2,4 +2,4 @@ import mets
 
 def test_import():
     """test import"""
-    m = mets.mdwrap()
+    m = mets.xmldata()

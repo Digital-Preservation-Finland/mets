@@ -24,8 +24,8 @@ def parse_wrap_mdtype(wrap):
     return {'mdtype': mdtype, 'othermdtype': other, 'mdtypeversion': version}
 
 
-def mdwrap(mdtype='PREMIS:OBJECT', othermdtype="",
-           mdtypeversion="2.3", child_elements=None):
+def mdwrap(mdtype, mdtypeversion, othermdtype="",
+           child_elements=None):
     mdwrap_e = _element('mdWrap')
     mdwrap_e.set('MDTYPE', mdtype.decode('utf-8'))
     mdwrap_e.set('MDTYPEVERSION', mdtypeversion.decode('utf-8'))
