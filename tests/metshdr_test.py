@@ -2,6 +2,7 @@
 import lxml.etree as ET
 import pytest
 
+import xml_helpers.utils as u
 import mets.metshdr_base as m
 
 
@@ -24,7 +25,7 @@ def test_agent():
           'ROLE="CREATOR" TYPE="ORGANIZATION">' \
           '<mets:name>zzz</mets:name></mets:agent>'
     hdr = m.agent('zzz')
-    assert ET.tostring(hdr) == xml
+    assert u.compare_trees(hdr, ET.fromstring(xml)) == True
 
 
 def test_metshdr():
@@ -36,5 +37,5 @@ def test_metshdr():
           '<mets:name>zzz</mets:name></mets:agent></mets:metsHdr>'
     hdr = m.metshdr('zzz', create_date='2017-12-12T12:12:12',
                     record_status='submission')
-    assert ET.tostring(hdr) == xml
+    assert u.compare_trees(hdr, ET.fromstring(xml)) == True
 

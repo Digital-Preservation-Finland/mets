@@ -3,6 +3,7 @@ import os
 import lxml.etree as ET
 import pytest
 
+import xml_helpers.utils as u
 import mets.base as m
 
 
@@ -10,7 +11,7 @@ TESTPATH = os.path.abspath(os.path.join(os.path.dirname(__file__)))
 
 
 def test_element_with_id():
-    """Test the `element_with_admid` method."""
+    """Test the `element_with_id` method."""
     root = ET.parse(os.path.join(TESTPATH, 'data', 'valid_mets.xml')).getroot()
     techmd = m.parse_element_with_id(root, 'tech003')
     assert techmd.attrib["ID"] == 'tech003'
@@ -19,7 +20,7 @@ def test_element_with_id():
 
 
 def test_iter_elements_with_id():
-    """Test the `element_with_admid` method."""
+    """Test the `iter_element_with_id` method."""
     root = ET.parse(os.path.join(TESTPATH, 'data', 'valid_mets.xml')).getroot()
     admid_string = 'dmd010  dmd009 file013'
     results = [x for x in m.iter_elements_with_id(root, admid_string)]
@@ -45,13 +46,13 @@ def test_parse_objid():
 
 def test_mets():
     """Test METS root generation"""
-    mets_tree = ET.tostring(m.mets('xxx', objid='yyy', label='zzz'))
+    mets_tree = m.mets('xxx', objid='yyy', label='zzz')
     mets_xml = '<mets:mets ' \
                'xmlns:mets="http://www.loc.gov/METS/" xmlns:xlink="http://www.w3.org/1999/xlink" ' \
                'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' \
                'xsi:schemaLocation="http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd" ' \
                'PROFILE="xxx" OBJID="yyy" LABEL="zzz"/>'
-    assert mets_tree == mets_xml
+    assert u.compare_trees(mets_tree, ET.fromstring(mets_xml)) == True
 
 
 def test_order():
@@ -81,13 +82,13 @@ def test_mets_ns():
 def test_element():
     """Test METS _element"""
     xml = """<mets:xxx xmlns:mets="http://www.loc.gov/METS/"/>"""
-    assert ET.tostring(m._element('xxx')) == xml
+    assert u.compare_trees(m._element('xxx'), ET.fromstring(xml)) == True
 
 
 def test_subelement():
     """Test METS _subelement"""
     xml = """<mets:xxx xmlns:mets="http://www.loc.gov/METS/"/>"""
-    parent_xml = """<mets:mets xmlns:mets = "http://www.loc.gov/METS/"/>"""
+    parent_xml = """<mets:mets xmlns:mets="http://www.loc.gov/METS/"/>"""
     parent = ET.fromstring(parent_xml)
-    assert ET.tostring(m._subelement(parent, 'xxx')) == xml
+    assert  u.compare_trees(m._subelement(parent, 'xxx'), ET.fromstring(xml)) == True
 

@@ -2,6 +2,7 @@
 import lxml.etree as ET
 import pytest
 
+import xml_helpers.utils as u
 import mets.filesec_base as m
 
 def test_filegrp():
@@ -9,14 +10,14 @@ def test_filegrp():
     xml = '<mets:fileGrp xmlns:mets="http://www.loc.gov/METS/" ' \
           'USE="xxx"/>'
     fgrp = m.filegrp(use='xxx')
-    assert ET.tostring(fgrp) == xml
+    assert u.compare_trees(fgrp, ET.fromstring(xml)) == True
 
 
 def test_filesec():
     """test filegrp"""
     xml = '<mets:fileSec xmlns:mets="http://www.loc.gov/METS/"/>'
     fsec = m.filesec()
-    assert ET.tostring(fsec) == xml
+    assert u.compare_trees(fsec, ET.fromstring(xml)) == True
 
 
 def test_file_element():
@@ -28,4 +29,4 @@ def test_file_element():
     felem = m.file_elem(file_id='xxx', admid_elements=['yyy'],
                         loctype='URI', xlink_href='zzz',
                         xlink_type='simple')
-    assert ET.tostring(felem) == xml
+    assert u.compare_trees(felem, ET.fromstring(xml)) == True

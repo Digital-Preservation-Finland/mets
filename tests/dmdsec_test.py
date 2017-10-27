@@ -2,6 +2,7 @@
 import lxml.etree as ET
 import pytest
 
+import xml_helpers.utils as u
 import mets.dmdsec_base as m
 
 def test_dmdsec():
@@ -9,5 +10,5 @@ def test_dmdsec():
     xml = '<mets:dmdSec xmlns:mets="http://www.loc.gov/METS/" ' \
           'ID="xxx" CREATED="2017-12-12T12:12:12"/>'
     dmd = m.dmdsec('xxx', created_date='2017-12-12T12:12:12')
-    assert ET.tostring(dmd) == xml
+    assert u.compare_trees(dmd, ET.fromstring(xml)) == True
 
