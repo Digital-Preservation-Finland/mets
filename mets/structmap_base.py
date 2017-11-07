@@ -1,13 +1,13 @@
 """Read and write METS documents"""
 
 from mets.base import _element, XLINK_NS, xlink_ns
-
+from xml_helpers.utils import decode_utf8
 
 def fptr(fileid=None):
     """Return the fptr element"""
 
     _fptr = _element('fptr')
-    _fptr.set('FILEID', fileid.decode('utf-8'))
+    _fptr.set('FILEID', decode_utf8(fileid))
 
     return _fptr
 
@@ -16,9 +16,9 @@ def mptr(loctype=None, xlink_href=None, xlink_type=None):
     """Return the fptr element"""
 
     _mptr = _element('mptr', ns={'xlink': XLINK_NS})
-    _mptr.set('LOCTYPE', loctype.decode('utf-8'))
-    _mptr.set(xlink_ns('href'), xlink_href.decode('utf-8'))
-    _mptr.set(xlink_ns('type'), xlink_type.decode('utf-8'))
+    _mptr.set('LOCTYPE', decode_utf8(loctype))
+    _mptr.set(xlink_ns('href'), decode_utf8(xlink_href))
+    _mptr.set(xlink_ns('type'), decode_utf8(xlink_type))
 
     return _mptr
 
@@ -29,19 +29,19 @@ def div(type_attr=None, order=None, contentids=None, label=None, orderlabel=None
     """Return the div element"""
 
     _div = _element('div')
-    _div.set('TYPE', type_attr.decode('utf-8'))
+    _div.set('TYPE', decode_utf8(type_attr))
     if order:
-        _div.set('ORDER', order.decode('utf-8'))
+        _div.set('ORDER', decode_utf8(order))
     if contentids:
-        _div.set('CONTENTIDS', contentids.decode('utf-8'))
+        _div.set('CONTENTIDS', decode_utf8(contentids))
     if label:
-        _div.set('LABEL', label.decode('utf-8'))
+        _div.set('LABEL', decode_utf8(label))
     if orderlabel:
-        _div.set('ORDERLABEL', orderlabel.decode('utf-8'))
+        _div.set('ORDERLABEL', decode_utf8(orderlabel))
     if dmdid:
-        _div.set('DMDID', ' '.join(dmdid).decode('utf-8'))
+        _div.set('DMDID', decode_utf8(''.join(dmdid)))
     if admid:
-        _div.set('ADMID', ' '.join(admid).decode('utf-8'))
+        _div.set('ADMID', decode_utf8(''.join(admid)))
 
     if div_elements:
         for elem in div_elements:
@@ -62,9 +62,9 @@ def structmap(type_attr=None, label=None):
     _structmap = _element('structMap')
     #_structMap.append(div_element)
     if type_attr:
-        _structmap.set('TYPE', type_attr.decode('utf-8'))
+        _structmap.set('TYPE', decode_utf8(type_attr))
     if label:
-        _structmap.set('LABEL', label.decode('utf-8'))
+        _structmap.set('LABEL', decode_utf8(label))
 
     return _structmap
 

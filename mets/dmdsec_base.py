@@ -2,15 +2,15 @@
 
 import datetime
 from mets.base import _element
-
+from xml_helpers.utils import decode_utf8
 
 def dmdsec(element_id, child_elements=None,
            created_date=datetime.datetime.utcnow().isoformat()):
     """Return the dmdSec element"""
 
     dmdsec_elem = _element('dmdSec')
-    dmdsec_elem.set('ID', element_id.decode('utf-8'))
-    dmdsec_elem.set('CREATED', created_date.decode('utf-8'))
+    dmdsec_elem.set('ID', decode_utf8(element_id))
+    dmdsec_elem.set('CREATED', decode_utf8(created_date))
     if child_elements:
         for elem in child_elements:
             dmdsec_elem.append(elem)

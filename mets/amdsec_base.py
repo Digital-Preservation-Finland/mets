@@ -2,15 +2,15 @@
 
 import datetime
 from mets.base import _element
-
+from xml_helpers.utils import decode_utf8
 
 def techmd(element_id, created_date=datetime.datetime.utcnow().isoformat(),
            child_elements=None):
     """Return the techMD element"""
 
     _techmd = _element('techMD')
-    _techmd.set('ID', element_id.decode('utf-8'))
-    _techmd.set('CREATED', created_date.decode('utf-8'))
+    _techmd.set('ID', decode_utf8(element_id))
+    _techmd.set('CREATED', decode_utf8(created_date))
 
     if child_elements:
         for elem in child_elements:
@@ -24,8 +24,8 @@ def digiprovmd(element_id, created_date=datetime.datetime.utcnow().isoformat(),
     """Return the digiprovMD element"""
 
     _digiprovmd = _element('digiprovMD')
-    _digiprovmd.set('ID', element_id.decode('utf-8'))
-    _digiprovmd.set('CREATED', created_date.decode('utf-8'))
+    _digiprovmd.set('ID', decode_utf8(element_id))
+    _digiprovmd.set('CREATED', decode_utf8(created_date))
 
     if child_elements:
         for elem in child_elements:

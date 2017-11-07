@@ -2,7 +2,7 @@
 
 import lxml.etree as ET
 import uuid
-from xml_helpers.utils import XSI_NS, xsi_ns
+from xml_helpers.utils import XSI_NS, xsi_ns, decode_utf8, encode_utf8
 
 METS_NS = 'http://www.loc.gov/METS/'
 XLINK_NS = 'http://www.w3.org/1999/xlink'
@@ -72,10 +72,10 @@ def mets(profile='local', objid=str(uuid.uuid4()), label=None,
         xsi_ns('schemaLocation'),
         'http://www.loc.gov/METS/ '
         'http://www.loc.gov/standards/mets/mets.xsd')
-    _mets.set('PROFILE', profile.decode("utf-8"))
-    _mets.set('OBJID', objid.decode("utf-8"))
+    _mets.set('PROFILE', decode_utf8(profile))
+    _mets.set('OBJID', decode_utf8(objid))
     if label:
-        _mets.set('LABEL', label.decode("utf-8"))
+        _mets.set('LABEL', decode_utf8(label))
 
     if child_elements:
         for elem in child_elements:
@@ -145,7 +145,7 @@ def parse_objid(mets_el):
 
     """
 
-    return mets_el.get("OBJID").encode('utf-8')
+    return encode_utf8(mets_el.get("OBJID"))
 
 
 def _element(tag, prefix="", ns={}):

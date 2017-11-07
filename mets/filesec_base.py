@@ -2,18 +2,18 @@
 
 
 from mets.base import _element, xlink_ns, XLINK_NS, NAMESPACES, METS_NS
-
+from xml_helpers.utils import decode_utf8, encode_utf8
 
 def parse_use(elem):
-    return elem.attrib.get('USE', '').encode('utf-8').strip()
+    return encode_utf8(elem.attrib.get('USE', '')).strip()
 
 
 def parse_admid(elem):
-    return elem.attrib.get('ADMID', '').encode('utf-8').strip().split()
+    return encode_utf8(elem.attrib.get('ADMID', '')).strip().split()
 
 
 def parse_href(elem):
-    return elem.attrib.get('{%s}href' % XLINK_NS).encode('utf-8').strip()
+    return encode_utf8(elem.attrib.get('{%s}href' % XLINK_NS)).strip()
 
 
 def parse_flocats(mets_file):
@@ -29,7 +29,7 @@ def filegrp(use=None, child_elements=None):
 
     _filegrp = _element('fileGrp')
     if use:
-        _filegrp.set('USE', use.decode('utf-8'))
+        _filegrp.set('USE', decode_utf8(use))
     if child_elements:
         for elem in child_elements:
             _filegrp.append(elem)
@@ -54,18 +54,18 @@ def file_elem(file_id=None, admid_elements=None, loctype=None,
     """Return the file element"""
 
     _file = _element('file')
-    _file.set('ID', file_id.decode('utf-8'))
+    _file.set('ID', decode_utf8(file_id))
     admids = ' '.join(admid_elements)
-    _file.set('ADMID', admids.decode('utf-8'))
+    _file.set('ADMID', decode_utf8(admids))
     if groupid:
-        _file.set('GROUPID', groupid.decode('utf-8'))
+        _file.set('GROUPID', decode_utf8(groupid))
     if use:
-        _file.set('USE', use.decode('utf-8'))
+        _file.set('USE', decode_utf8(use))
 
     _flocat = _element('FLocat', ns={'xlink': XLINK_NS})
-    _flocat.set('LOCTYPE', loctype.decode('utf-8'))
-    _flocat.set(xlink_ns('href'), xlink_href.decode('utf-8'))
-    _flocat.set(xlink_ns('type'), xlink_type.decode('utf-8'))
+    _flocat.set('LOCTYPE', decode_utf8(loctype))
+    _flocat.set(xlink_ns('href'), decode_utf8(xlink_href))
+    _flocat.set(xlink_ns('type'), decode_utf8(xlink_type))
     _file.append(_flocat)
 
     return _file
