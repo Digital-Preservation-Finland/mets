@@ -29,11 +29,13 @@ def get_created_date(mets):
 
 
 def agent(organisation_name, agent_role='CREATOR',
-          agent_type='ORGANIZATION'):
+          agent_type='ORGANIZATION', othertype=None):
     """Returns METS agent element"""
     metsagent = _element('agent')
     metsagent.set('ROLE', decode_utf8(agent_role))
     metsagent.set('TYPE', decode_utf8(agent_type))
+    if othertype:
+        metsagent.set('OTHERTYPE', othertype)
     _orgname = _element('name')
     _orgname.text = decode_utf8(organisation_name)
     metsagent.append(_orgname)
@@ -41,8 +43,9 @@ def agent(organisation_name, agent_role='CREATOR',
     return metsagent
 
 
-def metshdr(organisation_name, create_date=datetime.datetime.utcnow().isoformat(),
-            last_mod_date=None, record_status=None):
+def metshdr(organisation_name,
+            create_date=datetime.datetime.utcnow().isoformat(),
+            last_mod_date=None, record_status=None, packagingservice=None):
     """Return the metsHdr element"""
 
     _metshdr = _element('metsHdr')
@@ -54,6 +57,14 @@ def metshdr(organisation_name, create_date=datetime.datetime.utcnow().isoformat(
     _metsagent = agent(organisation_name)
 
     _metshdr.append(_metsagent)
+
+    if packagingservice:
+        archivist_metsagent = agent(organisation_name=organisation_name,
+                                    agent_role='ARCHIVIST')
+        _metshdr.append(archivist_metsagent)
+        softw_metsagent = agent(packagingservice, agent_type='OTHER',
+                                agent_role='CREATOR', othertype='SOFTWARE')
+        _metshdr.append(softw_metsagent)
 
     return _metshdr
 
