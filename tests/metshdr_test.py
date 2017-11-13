@@ -22,9 +22,9 @@ def test_get_created_date():
 def test_agent():
     """test agent"""
     xml = '<mets:agent xmlns:mets="http://www.loc.gov/METS/" ' \
-          'ROLE="CREATOR" TYPE="ORGANIZATION">' \
+          'ROLE="CREATOR" TYPE="ORGANIZATION" OTHERTYPE="abcd">' \
           '<mets:name>zzz</mets:name></mets:agent>'
-    hdr = m.agent('zzz')
+    hdr = m.agent('zzz', othertype='abcd')
     assert u.compare_trees(hdr, ET.fromstring(xml)) == True
 
 
@@ -34,8 +34,13 @@ def test_metshdr():
           'CREATEDATE="2017-12-12T12:12:12" ' \
           'RECORDSTATUS="submission">' \
           '<mets:agent ROLE="CREATOR" TYPE="ORGANIZATION">' \
-          '<mets:name>zzz</mets:name></mets:agent></mets:metsHdr>'
+          '<mets:name>zzz</mets:name></mets:agent>' \
+          '<mets:agent ROLE="ARCHIVIST" TYPE="ORGANIZATION">' \
+          '<mets:name>zzz</mets:name></mets:agent>' \
+          '<mets:agent ROLE="CREATOR" TYPE="OTHER" OTHERTYPE="SOFTWARE">' \
+          '<mets:name>Pekan Paketointipalvelu</mets:name></mets:agent>' \
+          '</mets:metsHdr>'
     hdr = m.metshdr('zzz', create_date='2017-12-12T12:12:12',
-                    record_status='submission')
+                    record_status='submission',
+                    packagingservice='Pekan Paketointipalvelu')
     assert u.compare_trees(hdr, ET.fromstring(xml)) == True
-
