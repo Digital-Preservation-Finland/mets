@@ -17,7 +17,11 @@ Install the required software with command::
 Usage
 -----
 
-All the functions can be used with calling mets.<function>.
+Import the library with::
+
+    import mets
+
+All the functions can now be used with calling mets.<function>.
 
 For example, the div() function in structmap_base.py can be used with::
 
