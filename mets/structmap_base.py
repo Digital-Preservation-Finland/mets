@@ -39,9 +39,9 @@ def div(type_attr=None, order=None, contentids=None, label=None, orderlabel=None
     if orderlabel:
         _div.set('ORDERLABEL', decode_utf8(orderlabel))
     if dmdid:
-        _div.set('DMDID', decode_utf8(''.join(dmdid)))
+        _div.set('DMDID', decode_utf8(' '.join(dmdid)))
     if admid:
-        _div.set('ADMID', decode_utf8(''.join(admid)))
+        _div.set('ADMID', decode_utf8(' '.join(admid)))
 
     if div_elements:
         for elem in div_elements:
