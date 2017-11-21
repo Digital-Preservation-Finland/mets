@@ -45,8 +45,16 @@ def agent(organisation_name, agent_role='CREATOR',
 
 def metshdr(organisation_name,
             create_date=datetime.datetime.utcnow().isoformat(),
-            last_mod_date=None, record_status=None, packagingservice=None):
-    """Return the metsHdr element"""
+            last_mod_date=None, record_status=None, agents=None):
+    """Return the metsHdr element
+
+    :organisation_name: Name of organisation
+    :create_date: Creation date
+    :last_mod_date: Last modified date
+    :record_status: Record status
+    :agents: List of agent elements
+    :returns: metsHdr element
+    """
 
     _metshdr = _element('metsHdr')
     _metshdr.set('CREATEDATE', decode_utf8(create_date))
@@ -58,13 +66,9 @@ def metshdr(organisation_name,
 
     _metshdr.append(_metsagent)
 
-    if packagingservice:
-        archivist_metsagent = agent(organisation_name=organisation_name,
-                                    agent_role='ARCHIVIST')
-        _metshdr.append(archivist_metsagent)
-        softw_metsagent = agent(packagingservice, agent_type='OTHER',
-                                agent_role='CREATOR', othertype='SOFTWARE')
-        _metshdr.append(softw_metsagent)
+    # Append each agent element to metsHdr element
+    if agents:
+        for metsagent in agents:
+            _metshdr.append(metsagent)
 
     return _metshdr
-

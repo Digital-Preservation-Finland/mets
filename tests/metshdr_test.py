@@ -42,5 +42,11 @@ def test_metshdr():
           '</mets:metsHdr>'
     hdr = m.metshdr('zzz', create_date='2017-12-12T12:12:12',
                     record_status='submission',
-                    packagingservice='Pekan Paketointipalvelu')
+                    agents=[
+                        m.agent('zzz', agent_role='ARCHIVIST'),
+                        m.agent('Pekan Paketointipalvelu',
+                                agent_role='CREATOR',
+                                agent_type='OTHER',
+                                othertype='SOFTWARE')
+                    ])
     assert u.compare_trees(hdr, ET.fromstring(xml)) == True
