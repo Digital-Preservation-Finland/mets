@@ -43,12 +43,10 @@ def agent(organisation_name, agent_role='CREATOR',
     return metsagent
 
 
-def metshdr(organisation_name,
-            create_date=datetime.datetime.utcnow().isoformat(),
+def metshdr(create_date=datetime.datetime.utcnow().isoformat(),
             last_mod_date=None, record_status=None, agents=None):
     """Return the metsHdr element
 
-    :organisation_name: Name of organisation
     :create_date: Creation date
     :last_mod_date: Last modified date
     :record_status: Record status
@@ -61,10 +59,6 @@ def metshdr(organisation_name,
     if last_mod_date:
         _metshdr.set('LASTMODDATE', decode_utf8(last_mod_date))
     _metshdr.set('RECORDSTATUS', decode_utf8(record_status))
-
-    _metsagent = agent(organisation_name)
-
-    _metshdr.append(_metsagent)
 
     # Append each agent element to metsHdr element
     if agents:

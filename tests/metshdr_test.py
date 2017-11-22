@@ -40,9 +40,10 @@ def test_metshdr():
           '<mets:agent ROLE="CREATOR" TYPE="OTHER" OTHERTYPE="SOFTWARE">' \
           '<mets:name>Pekan Paketointipalvelu</mets:name></mets:agent>' \
           '</mets:metsHdr>'
-    hdr = m.metshdr('zzz', create_date='2017-12-12T12:12:12',
+    hdr = m.metshdr(create_date='2017-12-12T12:12:12',
                     record_status='submission',
                     agents=[
+                        m.agent('zzz'),
                         m.agent('zzz', agent_role='ARCHIVIST'),
                         m.agent('Pekan Paketointipalvelu',
                                 agent_role='CREATOR',
