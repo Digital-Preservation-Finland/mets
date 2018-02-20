@@ -4,6 +4,7 @@
 from mets.base import _element, xlink_ns, XLINK_NS, NAMESPACES, METS_NS
 from xml_helpers.utils import decode_utf8, encode_utf8
 
+
 def parse_use(elem):
     return encode_utf8(elem.attrib.get('USE', '')).strip()
 
@@ -20,9 +21,16 @@ def parse_flocats(mets_file):
     results = mets_file.xpath('mets:FLocat', namespaces=NAMESPACES)
     return results
 
+
 def parse_files(mets_root):
     results = mets_root.xpath('//mets:file', namespaces=NAMESPACES)
     return results
+
+
+def parse_streams(mets_file_elem):
+    results = mets_file_elem.xpath('./mets:stream', namespaces=NAMESPACES)
+    return results
+
 
 def filegrp(use=None, child_elements=None):
     """Return the fileGrp element"""
