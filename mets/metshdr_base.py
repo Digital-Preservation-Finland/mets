@@ -2,8 +2,9 @@
 
 import datetime
 import dateutil.parser
-from mets.base import _element, mets_ns
 from xml_helpers.utils import encode_utf8, decode_utf8
+from mets.base import _element, mets_ns
+
 
 def get_created_date(mets):
     """Return createdate and modified date from given mets document.
@@ -23,7 +24,8 @@ def get_created_date(mets):
     if create_date is not None:
         create_date = dateutil.parser.parse(encode_utf8(create_date))
     if last_modified_date is not None:
-        last_modified_date = dateutil.parser.parse(encode_utf8(last_modified_date))
+        last_modified_date = dateutil.parser.parse(
+            encode_utf8(last_modified_date))
 
     return (create_date, last_modified_date)
 

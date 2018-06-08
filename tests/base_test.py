@@ -1,7 +1,6 @@
 """Test the `mets.mets` module"""
 import os
 import lxml.etree as ET
-import pytest
 
 import xml_helpers.utils as u
 import mets.base as m
@@ -48,11 +47,13 @@ def test_mets():
     """Test METS root generation"""
     mets_tree = m.mets('xxx', objid='yyy', label='zzz')
     mets_xml = '<mets:mets ' \
-               'xmlns:mets="http://www.loc.gov/METS/" xmlns:xlink="http://www.w3.org/1999/xlink" ' \
+               'xmlns:mets="http://www.loc.gov/METS/" '\
+               'xmlns:xlink="http://www.w3.org/1999/xlink" ' \
                'xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" ' \
-               'xsi:schemaLocation="http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/mets.xsd" ' \
+               'xsi:schemaLocation="http://www.loc.gov/METS/ '\
+               'http://www.loc.gov/standards/mets/mets.xsd" ' \
                'PROFILE="xxx" OBJID="yyy" LABEL="zzz"/>'
-    assert u.compare_trees(mets_tree, ET.fromstring(mets_xml)) == True
+    assert u.compare_trees(mets_tree, ET.fromstring(mets_xml)) is True
 
 
 def test_order():
@@ -82,7 +83,7 @@ def test_mets_ns():
 def test_element():
     """Test METS _element"""
     xml = """<mets:xxx xmlns:mets="http://www.loc.gov/METS/"/>"""
-    assert u.compare_trees(m._element('xxx'), ET.fromstring(xml)) == True
+    assert u.compare_trees(m._element('xxx'), ET.fromstring(xml)) is True
 
 
 def test_subelement():
@@ -90,5 +91,5 @@ def test_subelement():
     xml = """<mets:xxx xmlns:mets="http://www.loc.gov/METS/"/>"""
     parent_xml = """<mets:mets xmlns:mets="http://www.loc.gov/METS/"/>"""
     parent = ET.fromstring(parent_xml)
-    assert  u.compare_trees(m._subelement(parent, 'xxx'), ET.fromstring(xml)) == True
-
+    assert u.compare_trees(
+        m._subelement(parent, 'xxx'), ET.fromstring(xml)) is True

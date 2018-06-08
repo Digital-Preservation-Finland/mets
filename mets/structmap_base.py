@@ -1,7 +1,8 @@
 """Read and write METS documents"""
 
-from mets.base import _element, XLINK_NS, xlink_ns
 from xml_helpers.utils import decode_utf8
+from mets.base import _element, XLINK_NS, xlink_ns
+
 
 def fptr(fileid=None):
     """Return the fptr element"""
@@ -23,9 +24,9 @@ def mptr(loctype=None, xlink_href=None, xlink_type=None):
     return _mptr
 
 
-def div(type_attr=None, order=None, contentids=None, label=None, orderlabel=None,
-        dmdid=None, admid=None,
-        div_elements=None, fptr_elements=None, mptr_elements=None):
+def div(type_attr=None, order=None, contentids=None, label=None,
+        orderlabel=None, dmdid=None, admid=None, div_elements=None,
+        fptr_elements=None, mptr_elements=None):
     """Return the div element"""
 
     _div = _element('div')
@@ -60,11 +61,10 @@ def structmap(type_attr=None, label=None):
     """Return the structmap element"""
 
     _structmap = _element('structMap')
-    #_structMap.append(div_element)
+    # _structMap.append(div_element)
     if type_attr:
         _structmap.set('TYPE', decode_utf8(type_attr))
     if label:
         _structmap.set('LABEL', decode_utf8(label))
 
     return _structmap
-
