@@ -87,12 +87,14 @@ def mets(profile='local', objid=str(uuid.uuid4()), label=None,
 def order(elem):
     """Return order number for given element in METS schema. This can be
     use for example with sort(). """
-    return  ['{%s}dmdSec' % METS_NS,
-             '{%s}amdSec' % METS_NS,
-             '{%s}techMD' % METS_NS,
-             '{%s}digiprovMD' % METS_NS,
-             '{%s}fileSec' % METS_NS,
-             '{%s}structMap' % METS_NS].index(elem.tag)
+    return ['{%s}dmdSec' % METS_NS,
+            '{%s}amdSec' % METS_NS,
+            '{%s}techMD' % METS_NS,
+            '{%s}rightsMD' % METS_NS,
+            '{%s}sourceMD' % METS_NS,
+            '{%s}digiprovMD' % METS_NS,
+            '{%s}fileSec' % METS_NS,
+            '{%s}structMap' % METS_NS].index(elem.tag)
 
 
 def children_order(elem):
