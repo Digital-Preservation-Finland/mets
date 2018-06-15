@@ -1,7 +1,7 @@
 """Read and write METS documents"""
 
-import lxml.etree as ET
 import uuid
+import lxml.etree as ET
 from xml_helpers.utils import XSI_NS, xsi_ns, decode_utf8, encode_utf8
 
 METS_NS = 'http://www.loc.gov/METS/'
@@ -66,7 +66,6 @@ def mets(profile='local', objid=str(uuid.uuid4()), label=None,
          namespaces=NAMESPACES, child_elements=None):
     """Create METS ElementTree"""
 
-
     _mets = _element('mets', ns=namespaces)
     _mets.set(
         xsi_ns('schemaLocation'),
@@ -87,17 +86,19 @@ def mets(profile='local', objid=str(uuid.uuid4()), label=None,
 def order(elem):
     """Return order number for given element in METS schema. This can be
     use for example with sort(). """
-    return  ['{%s}dmdSec' % METS_NS,
-             '{%s}amdSec' % METS_NS,
-             '{%s}techMD' % METS_NS,
-             '{%s}digiprovMD' % METS_NS,
-             '{%s}fileSec' % METS_NS,
-             '{%s}structMap' % METS_NS].index(elem.tag)
+    return ['{%s}dmdSec' % METS_NS,
+            '{%s}amdSec' % METS_NS,
+            '{%s}techMD' % METS_NS,
+            '{%s}rightsMD' % METS_NS,
+            '{%s}sourceMD' % METS_NS,
+            '{%s}digiprovMD' % METS_NS,
+            '{%s}fileSec' % METS_NS,
+            '{%s}structMap' % METS_NS].index(elem.tag)
 
 
 def children_order(elem):
     return ['{%s}techMD' % METS_NS,
-            '{%s}digiprovMD' % METS_NS,].index(elem.getchildren()[0].tag)
+            '{%s}digiprovMD' % METS_NS].index(elem.getchildren()[0].tag)
 
 
 def merge_elements(tag, elements):
@@ -126,6 +127,7 @@ def mets_ns(tag, prefix=""):
         return '{%s}%s%s' % (METS_NS, prefix, tag)
     return '{%s}%s' % (METS_NS, tag)
 
+
 def xlink_ns(tag):
     """Prefix tags with XLINK namespace.
 
@@ -136,6 +138,7 @@ def xlink_ns(tag):
 
     """
     return '{%s}%s' % (XLINK_NS, tag)
+
 
 def parse_objid(mets_el):
     """Return mets:OBJID from given `mets` document
@@ -179,4 +182,3 @@ def _subelement(parent, tag, prefix="", ns={}):
     """
     ns['mets'] = METS_NS
     return ET.SubElement(parent, mets_ns(tag, prefix), nsmap=ns)
-

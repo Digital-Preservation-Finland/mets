@@ -1,10 +1,9 @@
 """Test mdwrap.py"""
 import os
 import lxml.etree as ET
-import pytest
 
-import mets
 from xml_helpers.utils import xsi_ns, compare_trees
+import mets
 
 
 TESTPATH = os.path.abspath(os.path.join(os.path.dirname(__file__)))
@@ -24,12 +23,13 @@ def test_mdwrap():
     """test mdwrap"""
     xml = '<mets:mdWrap xmlns:mets="http://www.loc.gov/METS/" ' \
           'MDTYPE="OTHER" MDTYPEVERSION="8.2" OTHERMDTYPE="ADDML"/>'
-    wrap = mets.mdwrap(mdtype='OTHER', othermdtype='ADDML', mdtypeversion='8.2')
-    assert compare_trees(wrap, ET.fromstring(xml)) == True
+    wrap = mets.mdwrap(mdtype='OTHER', othermdtype='ADDML',
+                       mdtypeversion='8.2')
+    assert compare_trees(wrap, ET.fromstring(xml)) is True
 
 
 def test_xmldata():
     """test xmldata"""
     xml = '<mets:xmlData xmlns:mets="http://www.loc.gov/METS/"/>'
     data = mets.xmldata()
-    assert compare_trees(data, ET.fromstring(xml)) == True
+    assert compare_trees(data, ET.fromstring(xml)) is True

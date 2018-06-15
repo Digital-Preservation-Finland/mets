@@ -1,8 +1,9 @@
 """Read and write METS documents"""
 
 import datetime
-from mets.base import _element
 from xml_helpers.utils import decode_utf8
+from mets.base import _element
+
 
 def dmdsec(element_id, child_elements=None,
            created_date=datetime.datetime.utcnow().isoformat()):
@@ -16,4 +17,3 @@ def dmdsec(element_id, child_elements=None,
             dmdsec_elem.append(elem)
 
     return dmdsec_elem
-

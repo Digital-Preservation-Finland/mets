@@ -1,8 +1,9 @@
 """Read and write METS documents"""
 
 import datetime
-from mets.base import _element
 from xml_helpers.utils import decode_utf8
+from mets.base import _element
+
 
 def techmd(element_id, created_date=datetime.datetime.utcnow().isoformat(),
            child_elements=None):

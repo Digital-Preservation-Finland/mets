@@ -1,33 +1,38 @@
 """Read and write METS documents"""
 
-
-from mets.base import _element, xlink_ns, XLINK_NS, NAMESPACES, METS_NS
 from xml_helpers.utils import decode_utf8, encode_utf8
+from mets.base import _element, xlink_ns, XLINK_NS, NAMESPACES
 
 
 def parse_use(elem):
+    """Return the USE attribute from an element."""
     return encode_utf8(elem.attrib.get('USE', '')).strip()
 
 
 def parse_admid(elem):
+    """Return the ADMID attribute from an element."""
     return encode_utf8(elem.attrib.get('ADMID', '')).strip().split()
 
 
 def parse_href(elem):
+    """Return the xlink:href attribute from an element."""
     return encode_utf8(elem.attrib.get('{%s}href' % XLINK_NS)).strip()
 
 
 def parse_flocats(mets_file):
+    """Return the FLocat elements."""
     results = mets_file.xpath('mets:FLocat', namespaces=NAMESPACES)
     return results
 
 
 def parse_files(mets_root):
+    """Return the file elements."""
     results = mets_root.xpath('//mets:file', namespaces=NAMESPACES)
     return results
 
 
 def parse_streams(mets_file_elem):
+    """Return the stream elements."""
     results = mets_file_elem.xpath('./mets:stream', namespaces=NAMESPACES)
     return results
 
@@ -77,4 +82,3 @@ def file_elem(file_id=None, admid_elements=None, loctype=None,
     _file.append(_flocat)
 
     return _file
-
