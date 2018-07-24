@@ -1,6 +1,6 @@
 pytest
 coverage
 pytest-cov
-dateutils
 lxml
-git+https://source.csc.fi/scm/git/pas/xml-helpers@develop#egg=xml_helpers
+python-dateutil
+git+https://gitlab.csc.fi/dpres/xml-helpers.git@develop#egg=xml_helpers
