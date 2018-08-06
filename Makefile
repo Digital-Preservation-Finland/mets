@@ -1,6 +1,7 @@
 MOCK_CONFIG=stable-7-x86_64
 ROOT=/
 PREFIX=/usr
+ANSIBLE_BRANCH=master
 
 install:
 	# Cleanup temporary files
@@ -40,8 +41,8 @@ e2e-localhost-cleanup: .e2e/ansible-fetch
 .e2e/ansible-fetch: .e2e/ansible
 	cd .e2e/ansible ; \
 		git fetch ; \
-		git checkout master ; \
-		git reset --hard origin/master ; \
+		git checkout $(ANSIBLE_BRANCH) ; \
+		git reset --hard origin/$(ANSIBLE_BRANCH) ; \
 		git clean -fdx ; \
 		git status
 
