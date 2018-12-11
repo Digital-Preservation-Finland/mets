@@ -64,7 +64,7 @@ def parse_element_with_id(root, identifier, section=None):
 
 def mets(profile='local', objid=str(uuid.uuid4()), label=None,
          namespaces=NAMESPACES, child_elements=None):
-    """Create METS ElementTree"""
+    """Create METS Element"""
 
     _mets = _element('mets', ns=namespaces)
     _mets.set(
