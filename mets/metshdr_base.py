@@ -45,8 +45,8 @@ def agent(organisation_name, agent_role='CREATOR',
     return metsagent
 
 
-def metshdr(create_date=datetime.datetime.utcnow().isoformat(),
-            last_mod_date=None, record_status=None, agents=None):
+def metshdr(create_date=None, last_mod_date=None, record_status=None,
+            agents=None):
     """Return the metsHdr element
 
     :create_date: Creation date
@@ -55,6 +55,8 @@ def metshdr(create_date=datetime.datetime.utcnow().isoformat(),
     :agents: List of agent elements
     :returns: metsHdr element
     """
+    if not create_date:
+        create_date = datetime.datetime.utcnow().isoformat()
 
     _metshdr = _element('metsHdr')
     _metshdr.set('CREATEDATE', decode_utf8(create_date))
