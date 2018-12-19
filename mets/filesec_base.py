@@ -61,6 +61,14 @@ def filesec(child_elements=None):
     return _filesec
 
 
+def stream(admid_elements=None):
+    """Return the stream element"""
+    stream = _element('stream')
+    admids = ' '.join(admid_elements) 
+    stream.set('ADMID', decode_utf8(admids))
+    return stream
+
+
 def file_elem(file_id=None, admid_elements=None, loctype=None,
               xlink_href=None, xlink_type=None, groupid=None,
               use=None):
