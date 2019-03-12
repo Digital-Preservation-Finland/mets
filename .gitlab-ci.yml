@@ -18,6 +18,13 @@ unit-test:
   except:
     - master
 
+unit-test-python36:
+  stage: local-test
+  script:
+    - 'unit-test-virtualenv.sh python36'
+  except:
+    - master
+
 e2e-localhost-preservation:
   stage: local-test
   script:
