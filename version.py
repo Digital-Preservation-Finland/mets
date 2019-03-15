@@ -7,13 +7,15 @@ To use this script, simply import it in your setup.py file
 and use the results of get_version() as your package version:
 
     from version import *
- 
+
     setup(
         ...
         version=get_version(),
         ...
     )
 """
+
+from __future__ import print_function
 
 __all__ = ('get_version')
 
@@ -25,48 +27,53 @@ VERSION_RE = re.compile('^Version: (.+)$', re.M)
 
 
 def call_git_describe():
-    """Calls git describe subprocess."""
+    """Determine package version from Git describe command"""
     cmd = 'git describe --abbrev --tags --match v[0-9]*'.split()
     print(' '.join(cmd))
-    p_obj = Popen(cmd, stdout=PIPE, stderr=PIPE)
-    (stdout, _) = p_obj.communicate()
+    git = Popen(cmd, stdout=PIPE, stderr=PIPE)
+    (stdout, _) = git.communicate()
     return stdout.strip()
 
 
 def write_pkg_info():
-    """Create and write package info."""
+    """Write package metadata PKG-INFO file"""
+
     if os.path.isfile('PKG-INFO'):
         return
 
-    d_name = os.path.abspath(os.path.dirname(__file__))
-    # pylint: disable=broad-except
-    # broad-except: Regardless what error takes place, 0.0 is the fallback
+    project_path = os.path.abspath(os.path.dirname(__file__))
+
     try:
-        version = re.match(r".*-v([\d\.]+-[^-]+-g[^/]+)", d_name).group(1)
-    except Exception:
+        version = re.match(
+            r".*-v([\d\.]+-[^-]+-g[^/]+)",
+            project_path).group(1)
+    except AttributeError:
         version = '0.0'
 
-    print("%s: Writing version info to '%s'..." % (
+    print("{}: Writing version info to: {}".format(
         __file__, os.path.abspath('PKG-INFO')))
-    f_out = open(os.path.join(d_name, 'PKG-INFO'), 'w')
-    f_out.write("Metadata-Version: 1.0\n")
-    f_out.write("Name: information-package-tools\n")
-    f_out.write("Version: %s\n" % version)
-    f_out.write("Summary: UNKNOWN\n")
-    f_out.write("Home-page: UNKNOWN\n")
-    f_out.write("Author: UNKNOWN\n")
-    f_out.write("Author-email: UNKNOWN\n")
-    f_out.write("License: UNKNOWN\n")
-    f_out.write("Description: UNKNOWN\n")
-    f_out.write("Platform: UNKNOWN\n")
-    f_out.close()
+
+    with open(os.path.join(project_path, 'PKG-INFO'), 'w') as pkginfo:
+
+        pkginfo.write("Metadata-Version: 1.0\n")
+        pkginfo.write("Name: information-package-tools\n")
+        pkginfo.write("Version: %s\n" % version)
+        pkginfo.write("Summary: UNKNOWN\n")
+        pkginfo.write("Home-page: UNKNOWN\n")
+        pkginfo.write("Author: UNKNOWN\n")
+        pkginfo.write("Author-email: UNKNOWN\n")
+        pkginfo.write("License: UNKNOWN\n")
+        pkginfo.write("Description: UNKNOWN\n")
+        pkginfo.write("Platform: UNKNOWN\n")
 
 
 def get_version():
-    """Get version."""
-    d_name = os.path.dirname(__file__)
+    """Determine version number for the project"""
 
-    if os.path.isdir(os.path.join(d_name, '../../.git')):
+    project_path = os.path.dirname(__file__)
+    git_repo_path = os.path.join(project_path, '../../.git')
+
+    if os.path.isdir(git_repo_path):
         # Get the version using "git describe".
         version_git = call_git_describe()
 
@@ -77,13 +84,14 @@ def get_version():
                 '-'.join(version_git.split('-')[2:])
             )
 
-        print("Version number from GIT repository: " + version)
+        print("Version number from GIT repository:", version)
+
     else:
         write_pkg_info()
         # Extract the version from the PKG-INFO file.
-        with open(os.path.join(d_name, 'PKG-INFO')) as f_in:
-            version = VERSION_RE.search(f_in.read()).group(1)
-        print("Version number from PKG-INFO: " + version)
+        with open(os.path.join(project_path, 'PKG-INFO')) as pkginfo:
+            version = VERSION_RE.search(pkginfo.read()).group(1)
+        print("Version number from PKG-INFO:", version)
 
     return version
 
