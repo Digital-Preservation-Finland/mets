@@ -18,23 +18,17 @@ unit-test:
   except:
     - master
 
-unit-test-python27:
+e2e-localhost-archives:
   stage: local-test
-  tags:
-    - docker
   script:
-    - 'unit-test-virtualenv.sh'
-  allow_failure: true
+    - 'e2e-localhost-archives.sh dpres-siptools-archives'
   except:
     - master
 
-unit-test-python36:
+e2e-localhost-siptools-research:
   stage: local-test
-  tags:
-    - docker
   script:
-    - 'unit-test-virtualenv.sh python36'
-  allow_failure: true
+    - 'e2e-fairdata-localhost.sh dpres-research-rest-api'
   except:
     - master
 
