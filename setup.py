@@ -11,6 +11,7 @@ def main():
     setup(
         name='mets',
         packages=find_packages(exclude=['tests', 'tests.*']),
+        include_package_data=True,
         version=get_version(),
         install_requires=[
             'lxml',

@@ -26,3 +26,4 @@ rpmbuild
 junit*.xml
 htmlcov/
 coverage.xml
+.tox/
