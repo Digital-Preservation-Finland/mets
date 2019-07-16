@@ -1,4 +1,5 @@
 """Read and write METS documents"""
+from __future__ import unicode_literals
 
 from xml_helpers.utils import encode_utf8, decode_utf8
 from mets.base import _element, METS_NS
@@ -22,11 +23,11 @@ def parse_wrap_mdtype(wrap):
     other = wrap.attrib.get('OTHERMDTYPE', None)
     version = wrap.attrib.get('MDTYPEVERSION', None)
     if mdtype is not None:
-        mdtype = encode_utf8(mdtype)
+        mdtype = decode_utf8(mdtype)
     if other is not None:
-        other = encode_utf8(other)
+        other = decode_utf8(other)
     if version is not None:
-        version = encode_utf8(version)
+        version = decode_utf8(version)
     return {'mdtype': mdtype, 'othermdtype': other, 'mdtypeversion': version}
 
 

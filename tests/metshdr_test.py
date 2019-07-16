@@ -1,5 +1,7 @@
 # coding=utf-8
 """Test metshdr.py"""
+from __future__ import unicode_literals
+
 import lxml.etree as ET
 
 import xml_helpers.utils as u
@@ -30,22 +32,22 @@ def test_agent():
 
 def test_metshdr():
     """test metshdr"""
-    xml = u'<mets:metsHdr xmlns:mets="http://www.loc.gov/METS/" ' \
-          u'CREATEDATE="2017-12-12T12:12:12" ' \
-          u'RECORDSTATUS="submission">' \
-          u'<mets:agent ROLE="CREATOR" TYPE="ORGANIZATION">' \
-          u'<mets:name>zzz</mets:name></mets:agent>' \
-          u'<mets:agent ROLE="ARCHIVIST" TYPE="ORGANIZATION">' \
-          u'<mets:name>zzz</mets:name></mets:agent>' \
-          u'<mets:agent ROLE="CREATOR" TYPE="OTHER" OTHERTYPE="SOFTWARE">' \
-          u'<mets:name>Pekan Paketointipalvelu Öy</mets:name></mets:agent>' \
-          u'</mets:metsHdr>'
+    xml = '<mets:metsHdr xmlns:mets="http://www.loc.gov/METS/" ' \
+          'CREATEDATE="2017-12-12T12:12:12" ' \
+          'RECORDSTATUS="submission">' \
+          '<mets:agent ROLE="CREATOR" TYPE="ORGANIZATION">' \
+          '<mets:name>zzz</mets:name></mets:agent>' \
+          '<mets:agent ROLE="ARCHIVIST" TYPE="ORGANIZATION">' \
+          '<mets:name>zzz</mets:name></mets:agent>' \
+          '<mets:agent ROLE="CREATOR" TYPE="OTHER" OTHERTYPE="SOFTWARE">' \
+          '<mets:name>Pekan Paketointipalvelu Öy</mets:name></mets:agent>' \
+          '</mets:metsHdr>'
     hdr = m.metshdr(create_date='2017-12-12T12:12:12',
                     record_status='submission',
                     agents=[
                         m.agent('zzz'),
                         m.agent('zzz', agent_role='ARCHIVIST'),
-                        m.agent(u'Pekan Paketointipalvelu Öy',
+                        m.agent('Pekan Paketointipalvelu Öy',
                                 agent_role='CREATOR',
                                 agent_type='OTHER',
                                 othertype='SOFTWARE')

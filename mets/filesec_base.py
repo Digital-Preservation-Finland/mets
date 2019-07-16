@@ -1,22 +1,25 @@
 """Read and write METS documents"""
+from __future__ import unicode_literals
 
+import six
+
+from mets.base import NAMESPACES, XLINK_NS, _element, xlink_ns
 from xml_helpers.utils import decode_utf8, encode_utf8
-from mets.base import _element, xlink_ns, XLINK_NS, NAMESPACES
 
 
 def parse_use(elem):
     """Return the USE attribute from an element."""
-    return encode_utf8(elem.attrib.get('USE', '')).strip()
+    return decode_utf8(elem.attrib.get('USE', '')).strip()
 
 
 def parse_admid(elem):
     """Return the ADMID attribute from an element."""
-    return encode_utf8(elem.attrib.get('ADMID', '')).strip().split()
+    return decode_utf8(elem.attrib.get('ADMID', '')).strip().split()
 
 
 def parse_href(elem):
     """Return the xlink:href attribute from an element."""
-    return encode_utf8(elem.attrib.get('{%s}href' % XLINK_NS)).strip()
+    return decode_utf8(elem.attrib.get('{%s}href' % XLINK_NS)).strip()
 
 
 def parse_flocats(mets_file):
@@ -64,8 +67,8 @@ def filesec(child_elements=None):
 def stream(admid_elements=None):
     """Return the stream element"""
     stream = _element('stream')
-    admids = ' '.join(admid_elements) 
-    stream.set('ADMID', decode_utf8(admids))
+    admids = ' '.join([decode_utf8(a) for a in admid_elements])
+    stream.set('ADMID', admids)
     return stream
 
 
@@ -76,7 +79,7 @@ def file_elem(file_id=None, admid_elements=None, loctype=None,
 
     _file = _element('file')
     _file.set('ID', decode_utf8(file_id))
-    admids = ' '.join(admid_elements)
+    admids = ' '.join([decode_utf8(a) for a in admid_elements])
     _file.set('ADMID', decode_utf8(admids))
     if groupid:
         _file.set('GROUPID', decode_utf8(groupid))

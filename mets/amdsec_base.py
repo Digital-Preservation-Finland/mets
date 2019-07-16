@@ -1,4 +1,5 @@
 """Read and write METS documents"""
+from __future__ import unicode_literals
 
 import datetime
 from xml_helpers.utils import decode_utf8

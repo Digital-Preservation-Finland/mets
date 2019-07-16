@@ -1,4 +1,5 @@
 """Read and write METS documents"""
+from __future__ import unicode_literals
 
 from xml_helpers.utils import decode_utf8
 from mets.base import _element, XLINK_NS, xlink_ns
@@ -40,9 +41,13 @@ def div(type_attr=None, order=None, contentids=None, label=None,
     if orderlabel:
         _div.set('ORDERLABEL', decode_utf8(orderlabel))
     if dmdid:
-        _div.set('DMDID', decode_utf8(' '.join(dmdid)))
+        _div.set(
+            'DMDID', ' '.join([decode_utf8(d) for d in dmdid])
+        )
     if admid:
-        _div.set('ADMID', decode_utf8(' '.join(admid)))
+        _div.set(
+            'ADMID', ' '.join([decode_utf8(a) for a in admid])
+        )
 
     if div_elements:
         for elem in div_elements:

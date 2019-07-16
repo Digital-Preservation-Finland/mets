@@ -1,4 +1,6 @@
 """Test the `mets.mets` module"""
+from __future__ import unicode_literals
+
 import os
 import lxml.etree as ET
 
@@ -37,8 +39,8 @@ def test_parse_objid():
 
     """
     xml = """<mets:mets OBJID="kdk-csc-sip001"
-             xmlns:mets="http://www.loc.gov/METS/">
-             </mets:mets>"""
+              xmlns:mets="http://www.loc.gov/METS/">
+              </mets:mets>"""
     objid = m.parse_objid(ET.fromstring(xml))
     assert objid == 'kdk-csc-sip001'
 

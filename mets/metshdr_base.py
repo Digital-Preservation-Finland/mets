@@ -1,4 +1,5 @@
 """Read and write METS documents"""
+from __future__ import unicode_literals
 
 import datetime
 import dateutil.parser
@@ -22,10 +23,13 @@ def get_created_date(mets):
     last_modified_date = header.get("LASTMODDATE")
 
     if create_date is not None:
-        create_date = dateutil.parser.parse(encode_utf8(create_date))
+        create_date = dateutil.parser.parse(
+            decode_utf8(create_date)
+        )
     if last_modified_date is not None:
         last_modified_date = dateutil.parser.parse(
-            encode_utf8(last_modified_date))
+            decode_utf8(last_modified_date)
+        )
 
     return (create_date, last_modified_date)
 

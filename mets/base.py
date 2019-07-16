@@ -1,7 +1,9 @@
 """Read and write METS documents"""
+from __future__ import unicode_literals
 
 import uuid
 import lxml.etree as ET
+import six
 from xml_helpers.utils import XSI_NS, xsi_ns, decode_utf8, encode_utf8
 
 METS_NS = 'http://www.loc.gov/METS/'
@@ -26,7 +28,7 @@ def iter_elements_with_id(root, identifiers, section=None):
     :returns: Iterable for all references metadata elements
 
     """
-    if isinstance(identifiers, str):
+    if isinstance(identifiers, six.string_types):
         identifiers = identifiers.split()
     for identifier in identifiers:
         yield parse_element_with_id(root, identifier, section)
@@ -46,6 +48,11 @@ def parse_element_with_id(root, identifier, section=None):
     :returns: References element
 
     """
+    identifier = decode_utf8(identifier)
+
+    if section:
+        section = decode_utf8(section)
+
     if section == "amdSec":
         query = "/mets:mets/mets:amdSec/*[@ID='{}']".format(identifier)
     elif section == "dmdSec":
@@ -62,7 +69,7 @@ def parse_element_with_id(root, identifier, section=None):
         return None
 
 
-def mets(profile='local', objid=str(uuid.uuid4()), label=None,
+def mets(profile='local', objid=six.text_type(uuid.uuid4()), label=None,
          namespaces=NAMESPACES, child_elements=None):
     """Create METS Element"""
 
@@ -122,7 +129,10 @@ def mets_ns(tag, prefix=""):
     :returns: Prefixed tag
 
     """
+    tag = decode_utf8(tag)
+
     if prefix:
+        prefix = decode_utf8(prefix)
         tag = tag[0].upper() + tag[1:]
         return '{%s}%s%s' % (METS_NS, prefix, tag)
     return '{%s}%s' % (METS_NS, tag)
@@ -148,7 +158,7 @@ def parse_objid(mets_el):
 
     """
 
-    return encode_utf8(mets_el.get("OBJID"))
+    return decode_utf8(mets_el.get("OBJID"))
 
 
 def _element(tag, prefix="", ns={}):
