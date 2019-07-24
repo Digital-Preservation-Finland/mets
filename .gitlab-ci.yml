@@ -3,6 +3,9 @@
 # changes really need to be made, see the instructions in
 # https://gitlab.csc.fi/dpres/gitlab-ci-pipeline/blob/master/README.rst
 
+variables:
+  ANSIBLE_REPOSITORY: 'ansible-preservation-system'
+
 stages:
   - rpm-package
   - local-test
@@ -39,6 +42,7 @@ unit-test-python27:
     - docker
   script:
     - 'unit-test-virtualenv.sh'
+  allow_failure: true
   except:
     - master
 
@@ -48,6 +52,7 @@ unit-test-python36:
     - docker
   script:
     - 'unit-test-virtualenv.sh python36'
+  allow_failure: true
   except:
     - master
 
@@ -96,8 +101,6 @@ e2e-distributed-preservation:
     - e2e-distributed
   script:
     - 'e2e-distributed.sh preservation'
-  after_script:
-    - 'sudo umount e2e-distributed-preservation/.sshfs'
   only:
     - develop
     - tags
