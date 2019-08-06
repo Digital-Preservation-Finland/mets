@@ -74,7 +74,41 @@ def test_children_order():
 
 def test_merge_elements():
     """Merge elements with given tag in elements list"""
-    # TODO
+    mets_tree_xml_a = """
+        <mets:mets xmlns:mets="http://www.loc.gov/METS/">
+          <mets:amdSec>
+            <mets:techMD ID="NUMBER_ONE">
+              <mets:mdWrap MDTYPE="PREMIS:OBJECT" MDTYPEVERSION="2.3">
+              </mets:mdWrap>
+            </mets:techMD>
+          </mets:amdSec>
+        </mets:mets>"""
+    mets_tree_xml_b = """
+        <mets:mets xmlns:mets="http://www.loc.gov/METS/">
+          <mets:amdSec>
+            <mets:techMD ID="NUMBER_TWO">
+              <mets:mdWrap MDTYPE="PREMIS:OBJECT" MDTYPEVERSION="2.3">
+              </mets:mdWrap>
+            </mets:techMD>
+          </mets:amdSec>
+        </mets:mets>"""
+    mets_tree_xml_a = ET.fromstring(mets_tree_xml_a)[0]
+    mets_tree_xml_b = ET.fromstring(mets_tree_xml_b)[0]
+    elements = [mets_tree_xml_a, mets_tree_xml_b]
+
+    # [amdsec_1: [techmd_1], amdsec_2: [techmd_2]]
+    # will be merged to
+    # [amdsec_1: [techmd_1, techmd_2]]
+    elements = m.merge_elements(m.mets_ns("amdSec"), elements)
+
+    assert len(elements) == 1
+    assert elements[0].tag == m.mets_ns("amdSec")
+
+    assert elements[0][0].tag == m.mets_ns("techMD")
+    assert elements[0][0].attrib["ID"] == "NUMBER_ONE"
+
+    assert elements[0][1].tag == m.mets_ns("techMD")
+    assert elements[0][1].attrib["ID"] == "NUMBER_TWO"
 
 
 def test_mets_ns():

@@ -110,7 +110,7 @@ def children_order(elem):
 
 def merge_elements(tag, elements):
     """Merge elements with given tag in elements list"""
-    elements_to_merge = filter(lambda x: x.tag == tag, elements)
+    elements_to_merge = list(filter(lambda x: x.tag == tag, elements))
 
     elements_to_merge.sort(key=children_order)
     for elem in elements_to_merge[1:]:
