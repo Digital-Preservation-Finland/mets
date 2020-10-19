@@ -11,6 +11,14 @@ install:
 	python setup.py build ; python ./setup.py install -O1 --prefix="${PREFIX}" --root="${ROOT}" --record=INSTALLED_FILES
 	cat INSTALLED_FILES | sed 's/^/\//g' >> INSTALLED_FILES
 
+install3:
+	# Cleanup temporary files
+	rm -f INSTALLED_FILES
+
+	# Use Python setuptools
+	python3 setup.py build ; python3 ./setup.py install -O1 --prefix="${PREFIX}" --root="${ROOT}" --record=INSTALLED_FILES
+	cat INSTALLED_FILES | sed 's/^/\//g' >> INSTALLED_FILES
+
 test:
 	py.test -svvvv --junitprefix=mets --junitxml=junit.xml tests
 
