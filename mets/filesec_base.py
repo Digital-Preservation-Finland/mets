@@ -40,6 +40,21 @@ def parse_streams(mets_file_elem):
     return results
 
 
+def parse_filegrps(mets_root, use=None):
+    """Return the fileGrp sections.
+
+    :mets_root: The mets root as an lxml.elementtree
+    :use: the USE attribute value of the fileGrp
+    :returns: the parsed fileGrp sections as a list of elements
+    """
+    xpath = '//mets:fileGrp'
+    if use:
+        xpath = xpath + '[@USE="%s"]' % use
+
+    results = mets_root.xpath(xpath, namespaces=NAMESPACES)
+    return results
+
+
 def filegrp(use=None, child_elements=None):
     """Return the fileGrp element"""
 

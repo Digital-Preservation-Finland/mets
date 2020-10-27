@@ -48,3 +48,28 @@ def test_parse_streams():
         'ID="s" ADMID="slink"/>')
     parsed_stream = m.parse_streams(felem)[0]
     assert u.compare_trees(stream, parsed_stream) is True
+
+
+def test_parse_filegrps():
+    """Tests the parse_filegrps function."""
+    xml = '<mets:fileSec xmlns:mets="http://www.loc.gov/METS/">' \
+          '<mets:fileGrp><mets:file/></mets:fileGrp>' \
+          '<mets:fileGrp USE="fi-preservation-xml-schemas">' \
+          '<mets:file/><mets:file/></mets:fileGrp>' \
+          '</mets:fileSec>'
+    parsed_filegrp = m.parse_filegrps(ET.fromstring(xml))
+    assert len(parsed_filegrp) == 2
+    filegrp = ET.fromstring(
+        '<mets:fileGrp xmlns:mets="http://www.loc.gov/METS/">'
+        '<mets:file/></mets:fileGrp>')
+    assert u.compare_trees(parsed_filegrp[0], filegrp) is True
+
+    # Now test with returning a specific fileGrp set based on the @USE
+    parsed_filegrp = m.parse_filegrps(
+        ET.fromstring(xml), use='fi-preservation-xml-schemas')
+    assert len(parsed_filegrp) == 1
+    filegrp = ET.fromstring(
+        '<mets:fileGrp xmlns:mets="http://www.loc.gov/METS/" '
+        'USE="fi-preservation-xml-schemas">'
+        '<mets:file/><mets:file/></mets:fileGrp>')
+    assert u.compare_trees(parsed_filegrp[0], filegrp) is True

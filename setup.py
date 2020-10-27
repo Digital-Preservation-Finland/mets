@@ -2,8 +2,11 @@
 Install mets
 """
 
+import re
 from setuptools import setup, find_packages
-from version import get_version
+
+with open('mets/__init__.py', 'r') as f:
+    version = re.search(r'__version__ = \'(.*?)\'', f.read()).group(1)
 
 
 def main():
@@ -12,7 +15,7 @@ def main():
         name='mets',
         packages=find_packages(exclude=['tests', 'tests.*']),
         include_package_data=True,
-        version=get_version(),
+        version=version,
         install_requires=[
             'lxml',
             'python-dateutil',
