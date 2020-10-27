@@ -5,6 +5,7 @@ import lxml.etree as ET
 
 import xml_helpers.utils as u
 import mets.filesec_base as m
+from mets.base import NAMESPACES
 
 
 def test_filegrp():
@@ -32,6 +33,29 @@ def test_file_element():
                         loctype='URI', xlink_href='zzz',
                         xlink_type='simple')
     assert u.compare_trees(felem, ET.fromstring(xml)) is True
+
+
+def test_parse_files():
+    """Tests the parse_files function."""
+    xml = '<mets:mets xmlns:mets="http://www.loc.gov/METS/"><mets:fileSec>' \
+          '<mets:fileGrp><mets:file/></mets:fileGrp>' \
+          '<mets:fileGrp USE="fi-preservation-xml-schemas">' \
+          '<mets:file/><mets:file/></mets:fileGrp>' \
+          '</mets:fileSec></mets:mets>'
+
+    # All file elements should be returned
+    parsed_files = m.parse_files(ET.fromstring(xml))
+    assert len(parsed_files) == 3
+
+    # Using the fileSec should yield the same results as the mets root
+    parsed_files = m.parse_files(ET.fromstring(xml).xpath(
+        './mets:fileSec', namespaces=NAMESPACES)[0])
+    assert len(parsed_files) == 3
+
+    # Return only files from one fileGrp
+    parsed_files = m.parse_files(ET.fromstring(xml).xpath(
+        './mets:fileSec/mets:fileGrp', namespaces=NAMESPACES)[0])
+    assert len(parsed_files) == 1
 
 
 def test_parse_streams():

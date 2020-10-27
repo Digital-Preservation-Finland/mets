@@ -28,9 +28,15 @@ def parse_flocats(mets_file):
     return results
 
 
-def parse_files(mets_root):
-    """Return the file elements."""
-    results = mets_root.xpath('//mets:file', namespaces=NAMESPACES)
+def parse_files(section):
+    """Return the file elements from a section. If the section is
+    a fileGrp, only the file elements from that fileGrp are
+    returned."""
+    xpath = '/mets:mets/mets:fileSec/mets:fileGrp/mets:file'
+    if section.tag == '{http://www.loc.gov/METS/}fileGrp':
+        xpath = './mets:file'
+
+    results = section.xpath(xpath, namespaces=NAMESPACES)
     return results
 
 
