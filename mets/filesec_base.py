@@ -1,10 +1,8 @@
 """Read and write METS documents"""
 from __future__ import unicode_literals
 
-import six
-
+from xml_helpers.utils import decode_utf8
 from mets.base import NAMESPACES, XLINK_NS, _element, xlink_ns
-from xml_helpers.utils import decode_utf8, encode_utf8
 
 
 def parse_use(elem):
@@ -28,10 +26,20 @@ def parse_flocats(mets_file):
     return results
 
 
-def parse_files(section):
-    """Return the file elements from a section. If the section is
-    a fileGrp, only the file elements from that fileGrp are
-    returned."""
+def parse_files(xml):
+    """Return the file elements from a section of XML data. If the
+    xml is a fileGrp, only the file elements from that fileGrp are
+    returned.
+
+    :xml: An lxml etree._Element or etree._ElementTree object
+    :returns: A list of file elements
+    """
+    # Try to get the root element of the XML if the type is an ElementTree
+    try:
+        section = xml.getroot()
+    except AttributeError:
+        section = xml
+
     xpath = '/mets:mets/mets:fileSec/mets:fileGrp/mets:file'
     if section.tag == '{http://www.loc.gov/METS/}fileGrp':
         xpath = './mets:file'
@@ -53,7 +61,7 @@ def parse_filegrps(mets_root, use=None):
     :use: the USE attribute value of the fileGrp
     :returns: the parsed fileGrp sections as a list of elements
     """
-    xpath = '//mets:fileGrp'
+    xpath = '/mets:mets/mets:fileSec/mets:fileGrp'
     if use:
         xpath = xpath + '[@USE="%s"]' % use
 

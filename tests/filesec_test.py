@@ -76,11 +76,11 @@ def test_parse_streams():
 
 def test_parse_filegrps():
     """Tests the parse_filegrps function."""
-    xml = '<mets:fileSec xmlns:mets="http://www.loc.gov/METS/">' \
+    xml = '<mets:mets xmlns:mets="http://www.loc.gov/METS/"><mets:fileSec>' \
           '<mets:fileGrp><mets:file/></mets:fileGrp>' \
           '<mets:fileGrp USE="fi-preservation-xml-schemas">' \
           '<mets:file/><mets:file/></mets:fileGrp>' \
-          '</mets:fileSec>'
+          '</mets:fileSec></mets:mets>'
     parsed_filegrp = m.parse_filegrps(ET.fromstring(xml))
     assert len(parsed_filegrp) == 2
     filegrp = ET.fromstring(
