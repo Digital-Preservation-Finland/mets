@@ -31,7 +31,7 @@ def parse_files(xml):
     xml is a fileGrp, only the file elements from that fileGrp are
     returned.
 
-    :xml: An lxml etree._Element or etree._ElementTree object
+    :xml: An lxml.etree Element or ElementTree object
     :returns: A list of file elements
     """
     # Try to get the root element of the XML if the type is an ElementTree
@@ -57,7 +57,7 @@ def parse_streams(mets_file_elem):
 def parse_filegrps(mets_root, use=None):
     """Return the fileGrp sections.
 
-    :mets_root: The mets root as an lxml.elementtree
+    :mets_root: The mets root as an lxml.etree ElementTree object
     :use: the USE attribute value of the fileGrp
     :returns: the parsed fileGrp sections as a list of elements
     """
