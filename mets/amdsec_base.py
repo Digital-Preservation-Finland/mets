@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 import datetime
 from xml_helpers.utils import decode_utf8
-from mets.base import _element
+from mets.base import _element, NAMESPACES
 
 
 def techmd(element_id, created_date=datetime.datetime.utcnow().isoformat(),
@@ -46,3 +46,14 @@ def amdsec(child_elements=None):
             _amdsec.append(elem)
 
     return _amdsec
+
+
+def iter_techmd(root):
+    """Iterates all techMD sections in a METS root element.
+
+    :root: Root element
+    :returns: Iterable for alla techMD elements
+    """
+    for techmd_elem in root.xpath('/mets:mets/mets:amdSec/mets:techMD',
+                                  namespaces=NAMESPACES):
+        yield techmd_elem

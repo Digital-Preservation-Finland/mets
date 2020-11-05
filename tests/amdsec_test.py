@@ -29,3 +29,13 @@ def test_amdsec():
     xml = '<mets:amdSec xmlns:mets="http://www.loc.gov/METS/"/>'
     amd = m.amdsec()
     assert u.compare_trees(amd, ET.fromstring(xml)) is True
+
+
+def test_iter_techmd():
+    """Tests the iter_techmd function."""
+    xml = '<mets:mets xmlns:mets="http://www.loc.gov/METS/">' \
+          '<mets:amdSec><mets:techMD/><mets:techMD/>' \
+          '</mets:amdSec></mets:mets>'
+    mets_elem = ET.fromstring(xml)
+    results = [x for x in m.iter_techmd(mets_elem)]
+    assert len(results) == 2
