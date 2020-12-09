@@ -78,19 +78,24 @@ def test_parse_streams():
 
 def test_parse_filegrps():
     """Tests the parse_filegrps function."""
-    parsed_filegrp = m.parse_filegrps(ET.fromstring(METS_FILESEC))
-    assert len(parsed_filegrp) == 3
+    parsed_filegrps = m.parse_filegrps(ET.fromstring(METS_FILESEC))
+    assert len(parsed_filegrps) == 3
     filegrp = ET.fromstring(
         '<mets:fileGrp xmlns:mets="http://www.loc.gov/METS/">'
         '<mets:file/></mets:fileGrp>')
-    assert u.compare_trees(parsed_filegrp[0], filegrp) is True
+    assert u.compare_trees(parsed_filegrps[0], filegrp) is True
 
-    # Now test with returning a specific fileGrp set based on the @USE
-    parsed_filegrp = m.parse_filegrps(
+
+def test_parse_filegrps_use():
+    """Tests the parse_filegrps function with searching for a specific
+    fileGrp set based on the @USE. Only the fileGrp matching the @USE
+    value should be returned.
+    """
+    parsed_filegrps = m.parse_filegrps(
         ET.fromstring(METS_FILESEC), use='fi-preservation-xml-schemas')
-    assert len(parsed_filegrp) == 1
+    assert len(parsed_filegrps) == 1
     filegrp = ET.fromstring(
         '<mets:fileGrp xmlns:mets="http://www.loc.gov/METS/" '
         'USE="fi-preservation-xml-schemas">'
         '<mets:file/><mets:file/></mets:fileGrp>')
-    assert u.compare_trees(parsed_filegrp[0], filegrp) is True
+    assert u.compare_trees(parsed_filegrps[0], filegrp) is True
