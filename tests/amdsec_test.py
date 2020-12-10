@@ -37,5 +37,4 @@ def test_iter_techmd():
           '<mets:amdSec><mets:techMD/><mets:techMD/>' \
           '</mets:amdSec></mets:mets>'
     mets_elem = ET.fromstring(xml)
-    results = [x for x in m.iter_techmd(mets_elem)]
-    assert len(results) == 2
+    assert len(list(m.iter_techmd(mets_elem))) == 2
