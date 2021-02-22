@@ -1,5 +1,5 @@
 """Package version, make functions generally available"""
-__version__ = '0.11'
+__version__ = '0.12'
 
 from mets.base import *
 from mets.amdsec_base import *
