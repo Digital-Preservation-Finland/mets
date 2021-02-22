@@ -3,4 +3,4 @@ coverage
 pytest-cov
 lxml
 python-dateutil
-git+https://gitlab.csc.fi/dpres/xml-helpers.git@develop#egg=xml_helpers
+git+https://gitlab.ci.csc.fi/dpres/xml-helpers.git@develop#egg=xml_helpers

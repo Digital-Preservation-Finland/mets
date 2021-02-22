@@ -9,7 +9,6 @@ install:
 
 	# Use Python setuptools
 	python setup.py build ; python ./setup.py install -O1 --prefix="${PREFIX}" --root="${ROOT}" --record=INSTALLED_FILES
-	cat INSTALLED_FILES | sed 's/^/\//g' >> INSTALLED_FILES
 
 install3:
 	# Cleanup temporary files
@@ -17,7 +16,6 @@ install3:
 
 	# Use Python setuptools
 	python3 setup.py build ; python3 ./setup.py install -O1 --prefix="${PREFIX}" --root="${ROOT}" --record=INSTALLED_FILES
-	cat INSTALLED_FILES | sed 's/^/\//g' >> INSTALLED_FILES
 
 test:
 	py.test -svvvv --junitprefix=mets --junitxml=junit.xml tests
@@ -44,7 +42,7 @@ e2e-localhost-cleanup: .e2e/ansible-fetch
 	cd .e2e/ansible ; ansible-playbook -i inventory/localhost e2e-pre-test-cleanup.yml
 
 .e2e/ansible:
-	git clone https://gitlab.csc.fi/dpres/ansible-preservation-system.git .e2e/ansible
+	git clone https://gitlab.ci.csc.fi/dpres/ansible-preservation-system.git .e2e/ansible
 
 .e2e/ansible-fetch: .e2e/ansible
 	cd .e2e/ansible ; \
