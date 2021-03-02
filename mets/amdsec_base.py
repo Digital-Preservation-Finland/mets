@@ -3,12 +3,14 @@ from __future__ import unicode_literals
 
 import datetime
 from xml_helpers.utils import decode_utf8
-from mets.base import _element, NAMESPACES
+from mets.base import _element, NAMESPACES, current_iso_datetime
 
 
-def techmd(element_id, created_date=datetime.datetime.utcnow().isoformat(),
-           child_elements=None):
+def techmd(element_id, created_date=None, child_elements=None):
     """Return the techMD element"""
+
+    if created_date is None:
+        created_date = current_iso_datetime()
 
     _techmd = _element('techMD')
     _techmd.set('ID', decode_utf8(element_id))
@@ -21,9 +23,11 @@ def techmd(element_id, created_date=datetime.datetime.utcnow().isoformat(),
     return _techmd
 
 
-def digiprovmd(element_id, created_date=datetime.datetime.utcnow().isoformat(),
-               child_elements=None):
+def digiprovmd(element_id, created_date=None, child_elements=None):
     """Return the digiprovMD element"""
+
+    if created_date is None:
+        created_date = current_iso_datetime()
 
     _digiprovmd = _element('digiprovMD')
     _digiprovmd.set('ID', decode_utf8(element_id))

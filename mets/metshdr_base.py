@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 import datetime
 import dateutil.parser
 from xml_helpers.utils import encode_utf8, decode_utf8
-from mets.base import _element, mets_ns
+from mets.base import _element, mets_ns, current_iso_datetime
 
 
 def get_created_date(mets):
@@ -59,8 +59,8 @@ def metshdr(create_date=None, last_mod_date=None, record_status=None,
     :agents: List of agent elements
     :returns: metsHdr element
     """
-    if not create_date:
-        create_date = datetime.datetime.utcnow().isoformat()
+    if create_date is None:
+        create_date = current_iso_datetime()
 
     _metshdr = _element('metsHdr')
     _metshdr.set('CREATEDATE', decode_utf8(create_date))

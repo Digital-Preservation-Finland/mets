@@ -1,10 +1,12 @@
 """Read and write METS documents"""
 from __future__ import unicode_literals
 
+import datetime
 import uuid
+
 import lxml.etree as ET
 import six
-from xml_helpers.utils import XSI_NS, xsi_ns, decode_utf8, encode_utf8
+from xml_helpers.utils import XSI_NS, decode_utf8, encode_utf8, xsi_ns
 
 METS_NS = 'http://www.loc.gov/METS/'
 XLINK_NS = 'http://www.w3.org/1999/xlink'
@@ -69,9 +71,15 @@ def parse_element_with_id(root, identifier, section=None):
         return None
 
 
-def mets(profile='local', objid=six.text_type(uuid.uuid4()), label=None,
-         namespaces=NAMESPACES, child_elements=None):
+def mets(profile='local', objid=None, label=None, namespaces=None,
+         child_elements=None):
     """Create METS Element"""
+
+    if namespaces is None:
+        namespaces = NAMESPACES
+
+    if objid is None:
+        objid = six.text_type(uuid.uuid4())
 
     _mets = _element('mets', ns=namespaces)
     _mets.set(
@@ -161,7 +169,7 @@ def parse_objid(mets_el):
     return decode_utf8(mets_el.get("OBJID"))
 
 
-def _element(tag, prefix="", ns={}):
+def _element(tag, prefix="", ns=None):
     """Return _ElementInterface with METS namespace.
 
     Prefix parameter is useful for adding prefixed to lower case tags. It just
@@ -176,11 +184,14 @@ def _element(tag, prefix="", ns={}):
     :returns: ElementTree element object
 
     """
+    if ns is None:
+        ns = {}
+
     ns['mets'] = METS_NS
     return ET.Element(mets_ns(tag, prefix), nsmap=ns)
 
 
-def _subelement(parent, tag, prefix="", ns={}):
+def _subelement(parent, tag, prefix="", ns=None):
     """Return subelement for the given parent element. Created element is
     appelded to parent element.
 
@@ -190,5 +201,15 @@ def _subelement(parent, tag, prefix="", ns={}):
     :returns: Created subelement
 
     """
+    if ns is None:
+        ns = {}
+
     ns['mets'] = METS_NS
     return ET.SubElement(parent, mets_ns(tag, prefix), nsmap=ns)
+
+
+def current_iso_datetime():
+    """
+    Return the current datetime as a ISO 8601 string with time zone information
+    """
+    return "{}+00:00".format(datetime.datetime.utcnow().isoformat())
