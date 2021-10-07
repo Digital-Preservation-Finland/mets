@@ -15,7 +15,7 @@ METS_FILESEC = """
 xmlns:xlink="http://www.w3.org/1999/xlink" \
 LOCTYPE="URI" xlink:href="zzz" xlink:type="simple"/>\
 <mets:stream ID="s" ADMID="slink"/></mets:file></mets:fileGrp>\
-<mets:fileGrp USE="fi-preservation-xml-schemas">\
+<mets:fileGrp USE="fi-dpres-xml-schemas">\
 <mets:file/><mets:file/></mets:fileGrp>\
 </mets:fileSec></mets:mets>
 """
@@ -92,10 +92,10 @@ def test_parse_filegrps_use():
     value should be returned.
     """
     parsed_filegrps = m.parse_filegrps(
-        ET.fromstring(METS_FILESEC), use='fi-preservation-xml-schemas')
+        ET.fromstring(METS_FILESEC), use='fi-dpres-xml-schemas')
     assert len(parsed_filegrps) == 1
     filegrp = ET.fromstring(
         '<mets:fileGrp xmlns:mets="http://www.loc.gov/METS/" '
-        'USE="fi-preservation-xml-schemas">'
+        'USE="fi-dpres-xml-schemas">'
         '<mets:file/><mets:file/></mets:fileGrp>')
     assert u.compare_trees(parsed_filegrps[0], filegrp) is True
