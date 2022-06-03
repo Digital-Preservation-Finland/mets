@@ -1,6 +1,7 @@
 """Package version, make functions generally available"""
 __version__ = '0.15'
 
+# flake8: noqa
 from mets.base import *
 from mets.amdsec_base import *
 from mets.dmdsec_base import *

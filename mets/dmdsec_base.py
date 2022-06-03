@@ -1,7 +1,6 @@
 """Read and write METS documents"""
 from __future__ import unicode_literals
 
-import datetime
 from xml_helpers.utils import decode_utf8
 from mets.base import _element, current_iso_datetime
 

@@ -6,7 +6,7 @@ import uuid
 
 import lxml.etree as ET
 import six
-from xml_helpers.utils import XSI_NS, decode_utf8, encode_utf8, xsi_ns
+from xml_helpers.utils import XSI_NS, decode_utf8, xsi_ns
 
 METS_NS = 'http://www.loc.gov/METS/'
 XLINK_NS = 'http://www.w3.org/1999/xlink'

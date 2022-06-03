@@ -1,7 +1,7 @@
 """Read and write METS documents"""
 from __future__ import unicode_literals
 
-from xml_helpers.utils import encode_utf8, decode_utf8
+from xml_helpers.utils import decode_utf8
 from mets.base import _element, METS_NS
 
 
