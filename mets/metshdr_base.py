@@ -33,11 +33,13 @@ def get_created_date(mets):
     return (create_date, last_modified_date)
 
 
-def agent(organisation_name, agent_role='CREATOR',
-          agent_type='ORGANIZATION', othertype=None):
+def agent(organisation_name, agent_role='CREATOR', agent_type='ORGANIZATION',
+          othertype=None, otherrole=None):
     """Returns METS agent element"""
     metsagent = _element('agent')
     metsagent.set('ROLE', decode_utf8(agent_role))
+    if otherrole:
+        metsagent.set('OTHERROLE', otherrole)
     metsagent.set('TYPE', decode_utf8(agent_type))
     if othertype:
         metsagent.set('OTHERTYPE', othertype)

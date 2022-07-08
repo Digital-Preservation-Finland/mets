@@ -24,9 +24,10 @@ def test_get_created_date():
 def test_agent():
     """test agent"""
     xml = '<mets:agent xmlns:mets="http://www.loc.gov/METS/" ' \
-          'ROLE="CREATOR" TYPE="ORGANIZATION" OTHERTYPE="abcd">' \
+          'ROLE="CREATOR" OTHERROLE="efgh" ' \
+          'TYPE="ORGANIZATION" OTHERTYPE="abcd">' \
           '<mets:name>zzz</mets:name></mets:agent>'
-    hdr = m.agent('zzz', othertype='abcd')
+    hdr = m.agent('zzz', othertype='abcd', otherrole='efgh')
     assert u.compare_trees(hdr, ET.fromstring(xml)) is True
 
 
