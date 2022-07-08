@@ -65,7 +65,8 @@ def metshdr(create_date=None, last_mod_date=None, record_status=None,
     _metshdr.set('CREATEDATE', decode_utf8(create_date))
     if last_mod_date:
         _metshdr.set('LASTMODDATE', decode_utf8(last_mod_date))
-    _metshdr.set('RECORDSTATUS', decode_utf8(record_status))
+    if record_status:
+        _metshdr.set('RECORDSTATUS', decode_utf8(record_status))
 
     # Append each agent element to metsHdr element
     if agents:
