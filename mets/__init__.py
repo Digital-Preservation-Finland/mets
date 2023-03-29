@@ -1,6 +1,7 @@
 """Package version, make functions generally available"""
-__version__ = '0.17'
+__version__ = '0.18'
 
+# flake8 doesn't like these imports, but they are needed for other repos
 # flake8: noqa
 from mets.base import *
 from mets.amdsec_base import *
