@@ -16,8 +16,6 @@ def main():
         install_requires=[
             'lxml',
             'python-dateutil',
-            'xml_helpers@git+https://gitlab.ci.csc.fi/dpres/xml-helpers.git'
-            '@develop#egg=xml_helpers'
         ]
     )
 
