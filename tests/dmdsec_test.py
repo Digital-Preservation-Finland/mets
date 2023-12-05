@@ -1,5 +1,4 @@
 """Test dmdsec.py"""
-from __future__ import unicode_literals
 
 import lxml.etree as ET
 

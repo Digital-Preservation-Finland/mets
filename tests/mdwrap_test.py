@@ -1,5 +1,4 @@
 """Test mdwrap.py"""
-from __future__ import unicode_literals
 
 import os
 import lxml.etree as ET

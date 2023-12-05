@@ -1,5 +1,4 @@
 """Read and write METS documents"""
-from __future__ import unicode_literals
 
 from xml_helpers.utils import decode_utf8
 from mets.base import _element, NAMESPACES, current_iso_datetime
@@ -57,6 +56,5 @@ def iter_techmd(root):
     :root: Root element
     :returns: Iterable for alla techMD elements
     """
-    for techmd_elem in root.xpath('/mets:mets/mets:amdSec/mets:techMD',
-                                  namespaces=NAMESPACES):
-        yield techmd_elem
+    yield from root.xpath('/mets:mets/mets:amdSec/mets:techMD',
+                                  namespaces=NAMESPACES)

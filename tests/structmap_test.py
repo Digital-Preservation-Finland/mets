@@ -1,6 +1,4 @@
-# coding=utf-8
 """Test dmdsec.py"""
-from __future__ import unicode_literals
 
 import lxml.etree as ET
 
@@ -21,7 +19,7 @@ def test_mptr():
     xml = '<mets:mptr xmlns:mets="http://www.loc.gov/METS/" ' \
           'xmlns:xlink="http://www.w3.org/1999/xlink" ' \
           'LOCTYPE="xxx" xlink:href="yyy" xlink:type="äää"/>'
-    mptr = m.mptr(loctype='xxx', xlink_href='yyy', xlink_type=u'äää')
+    mptr = m.mptr(loctype='xxx', xlink_href='yyy', xlink_type='äää')
     assert u.compare_trees(mptr, ET.fromstring(xml)) is True
 
 

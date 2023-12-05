@@ -1,5 +1,4 @@
 """Read and write METS documents"""
-from __future__ import unicode_literals
 
 import datetime
 import uuid
@@ -30,7 +29,7 @@ def iter_elements_with_id(root, identifiers, section=None):
     :returns: Iterable for all references metadata elements
 
     """
-    if isinstance(identifiers, six.string_types):
+    if isinstance(identifiers, str):
         identifiers = identifiers.split()
     for identifier in identifiers:
         yield parse_element_with_id(root, identifier, section)
@@ -56,12 +55,12 @@ def parse_element_with_id(root, identifier, section=None):
         section = decode_utf8(section)
 
     if section == "amdSec":
-        query = "/mets:mets/mets:amdSec/*[@ID='{}']".format(identifier)
+        query = f"/mets:mets/mets:amdSec/*[@ID='{identifier}']"
     elif section == "dmdSec":
-        query = "/mets:mets/mets:dmdSec[@ID='{}']".format(identifier)
+        query = f"/mets:mets/mets:dmdSec[@ID='{identifier}']"
     elif section == "fileSec":
         query = "/mets:mets/mets:fileSec/mets:fileGrp/"
-        "mets:file[@ID='{}']".format(identifier)
+        f"mets:file[@ID='{identifier}']"
     else:
         query = "//*[@ID='%s']" % identifier
     results = root.xpath(query, namespaces=NAMESPACES)
@@ -79,7 +78,7 @@ def mets(profile='local', objid=None, label=None, namespaces=None,
         namespaces = NAMESPACES
 
     if objid is None:
-        objid = six.text_type(uuid.uuid4())
+        objid = str(uuid.uuid4())
 
     _mets = _element('mets', ns=namespaces)
     _mets.set(
@@ -142,8 +141,8 @@ def mets_ns(tag, prefix=""):
     if prefix:
         prefix = decode_utf8(prefix)
         tag = tag[0].upper() + tag[1:]
-        return '{%s}%s%s' % (METS_NS, prefix, tag)
-    return '{%s}%s' % (METS_NS, tag)
+        return '{{{}}}{}{}'.format(METS_NS, prefix, tag)
+    return '{{{}}}{}'.format(METS_NS, tag)
 
 
 def xlink_ns(tag):
@@ -155,7 +154,7 @@ def xlink_ns(tag):
     :returns: Prefixed tag
 
     """
-    return '{%s}%s' % (XLINK_NS, tag)
+    return '{{{}}}{}'.format(XLINK_NS, tag)
 
 
 def parse_objid(mets_el):
@@ -212,4 +211,4 @@ def current_iso_datetime():
     """
     Return the current datetime as a ISO 8601 string with time zone information
     """
-    return "{}+00:00".format(datetime.datetime.utcnow().isoformat())
+    return f"{datetime.datetime.utcnow().isoformat()}+00:00"

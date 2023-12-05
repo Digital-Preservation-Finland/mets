@@ -1,6 +1,4 @@
-# coding=utf-8
 """Test metshdr.py"""
-from __future__ import unicode_literals
 
 import lxml.etree as ET
 
