@@ -140,8 +140,8 @@ def mets_ns(tag, prefix=""):
     if prefix:
         prefix = decode_utf8(prefix)
         tag = tag[0].upper() + tag[1:]
-        return '{{{}}}{}{}'.format(METS_NS, prefix, tag)
-    return '{{{}}}{}'.format(METS_NS, tag)
+        return f'{{{METS_NS}}}{prefix}{tag}'
+    return f'{{{METS_NS}}}{tag}'
 
 
 def xlink_ns(tag):
@@ -153,7 +153,7 @@ def xlink_ns(tag):
     :returns: Prefixed tag
 
     """
-    return '{{{}}}{}'.format(XLINK_NS, tag)
+    return f'{{{XLINK_NS}}}{tag}'
 
 
 def parse_objid(mets_el):
