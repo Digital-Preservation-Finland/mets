@@ -4,7 +4,6 @@ import datetime
 import uuid
 
 import lxml.etree as ET
-import six
 from xml_helpers.utils import XSI_NS, decode_utf8, xsi_ns
 
 METS_NS = 'http://www.loc.gov/METS/'

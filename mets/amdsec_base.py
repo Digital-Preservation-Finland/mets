@@ -57,4 +57,4 @@ def iter_techmd(root):
     :returns: Iterable for alla techMD elements
     """
     yield from root.xpath('/mets:mets/mets:amdSec/mets:techMD',
-                                  namespaces=NAMESPACES)
+                          namespaces=NAMESPACES)
