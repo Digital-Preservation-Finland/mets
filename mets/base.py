@@ -61,7 +61,7 @@ def parse_element_with_id(root, identifier, section=None):
         query = ("/mets:mets/mets:fileSec/mets:fileGrp/"
                  f"mets:file[@ID='{identifier}']")
     else:
-        query = "//*[@ID='%s']" % identifier
+        query = f"//*[@ID='{identifier}']"
     results = root.xpath(query, namespaces=NAMESPACES)
     if len(results) == 1:
         return results[0]
