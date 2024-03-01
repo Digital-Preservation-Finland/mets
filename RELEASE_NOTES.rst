@@ -1,6 +1,11 @@
 Release notes
 =============
 
+Version 0.20
+------------
+
+- Code cleanups and syntax fixes
+
 Version 0.19
 ------------
 - Added RHEL9 RPM spec file
