@@ -1,5 +1,5 @@
 """Package version, make functions generally available"""
-__version__ = '0.20'
+__version__ = '0.21'
 
 # flake8 doesn't like these imports, but they are needed for other repos
 # flake8: noqa
