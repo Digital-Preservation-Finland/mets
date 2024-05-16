@@ -210,4 +210,4 @@ def current_iso_datetime():
     """
     Return the current datetime as a ISO 8601 string with time zone information
     """
-    return f"{datetime.datetime.utcnow().isoformat()}+00:00"
+    return f"{datetime.datetime.now(datetime.timezone.utc).isoformat()}+00:00"
