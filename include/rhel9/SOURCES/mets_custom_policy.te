@@ -1,0 +1,11 @@
+
+module mets_custom_policy 1.0;
+
+require {
+	type user_devpts_t;
+	type chkpwd_t;
+	class chr_file { read write };
+}
+
+#============= chkpwd_t ==============
+allow chkpwd_t user_devpts_t:chr_file { read write };
