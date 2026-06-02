@@ -23,6 +23,14 @@ def test_digiprovmd():
     assert u.compare_trees(digiprov, ET.fromstring(xml)) is True
 
 
+def test_rightsmd():
+    """test rightsmd"""
+    xml = '<mets:rightsMD xmlns:mets="http://www.loc.gov/METS/" ' \
+          'ID="xxx" CREATED="2017-12-12T12:12:12"/>'
+    rightsmd = m.rightsmd('xxx', created_date='2017-12-12T12:12:12')
+    assert u.compare_trees(rightsmd, ET.fromstring(xml)) is True
+
+
 def test_amdsec():
     """test amdsec"""
     xml = '<mets:amdSec xmlns:mets="http://www.loc.gov/METS/"/>'

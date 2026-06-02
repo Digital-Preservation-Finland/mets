@@ -1,6 +1,11 @@
 Release notes
 =============
 
+Unreleased
+----------
+
+- Add ``mets.amdsec.rightsmd`` for generating ``mets:rightsMD`` elements
+
 Version 0.22
 ------------
 

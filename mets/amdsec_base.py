@@ -38,6 +38,14 @@ def digiprovmd(element_id, created_date=None, child_elements=None):
     )
 
 
+def rightsmd(element_id, created_date=None, child_elements=None):
+    """Return the rightsMD element"""
+    return _create_md(
+        "rightsMD", element_id=element_id,
+        created_date=created_date, child_elements=child_elements
+    )
+
+
 def amdsec(child_elements=None):
     """Return the amdSec element"""
 
