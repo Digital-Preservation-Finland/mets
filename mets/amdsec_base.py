@@ -1,41 +1,41 @@
 """Read and write METS documents"""
+from __future__ import annotations
 
-from xml_helpers.utils import decode_utf8
 from mets.base import _element, NAMESPACES, current_iso_datetime
+
+
+def _create_md(name, element_id, created_date=None, child_elements=None):
+    """Return a METS metadata block with given name and creation date,
+    defaulting to current datetime if none is provided.
+    """
+    if created_date is None:
+        created_date = current_iso_datetime()
+
+    md_el = _element(name)
+    md_el.set('ID', element_id)
+    md_el.set('CREATED', created_date)
+
+    if child_elements:
+        for elem in child_elements:
+            md_el.append(elem)
+
+    return md_el
 
 
 def techmd(element_id, created_date=None, child_elements=None):
     """Return the techMD element"""
-
-    if created_date is None:
-        created_date = current_iso_datetime()
-
-    _techmd = _element('techMD')
-    _techmd.set('ID', decode_utf8(element_id))
-    _techmd.set('CREATED', decode_utf8(created_date))
-
-    if child_elements:
-        for elem in child_elements:
-            _techmd.append(elem)
-
-    return _techmd
+    return _create_md(
+        "techMD", element_id=element_id,
+        created_date=created_date, child_elements=child_elements
+    )
 
 
 def digiprovmd(element_id, created_date=None, child_elements=None):
     """Return the digiprovMD element"""
-
-    if created_date is None:
-        created_date = current_iso_datetime()
-
-    _digiprovmd = _element('digiprovMD')
-    _digiprovmd.set('ID', decode_utf8(element_id))
-    _digiprovmd.set('CREATED', decode_utf8(created_date))
-
-    if child_elements:
-        for elem in child_elements:
-            _digiprovmd.append(elem)
-
-    return _digiprovmd
+    return _create_md(
+        "digiprovMD", element_id=element_id,
+        created_date=created_date, child_elements=child_elements
+    )
 
 
 def amdsec(child_elements=None):
