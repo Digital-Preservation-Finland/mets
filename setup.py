@@ -3,7 +3,6 @@ Install mets
 """
 
 from setuptools import setup, find_packages
-from version import get_version
 
 
 def main():
@@ -12,7 +11,10 @@ def main():
         name='mets',
         packages=find_packages(exclude=['tests', 'tests.*']),
         include_package_data=True,
-        version=get_version(),
+        setup_requires=["setuptools-scm"],
+        use_scm_version={
+            "write_to": "mets/_version.py"
+        },
         install_requires=[
             'lxml',
             'python-dateutil',

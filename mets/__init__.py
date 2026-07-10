@@ -1,5 +1,9 @@
 """Package version, make functions generally available"""
-__version__ = '0.22'
+try:
+    from ._version import version as __version__
+except ImportError:
+    # Package not installed
+    __version__ = "unknown"
 
 # flake8 doesn't like these imports, but they are needed for other repos
 # flake8: noqa

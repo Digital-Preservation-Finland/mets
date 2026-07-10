@@ -28,3 +28,5 @@ junit*.xml
 htmlcov/
 coverage.xml
 .tox/
+.eggs/
+mets/_version.py
